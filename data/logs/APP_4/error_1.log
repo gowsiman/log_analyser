@@ -1,0 +1,89 @@
+2025-02-01T16:10:00.123Z [INFO ] [UI] [TRACE_U123456_98765_100_1706803800] User initiated cash withdrawal request. Amount: $500, Account: 987654321.
+|||2025-02-01T16:10:00.124Z [DEBUG] [UI] [TRACE_U123456_98765_100_1706803800] Sending withdrawal request to Spring Boot server.
+|||2025-02-01T16:10:00.125Z [INFO ] [TellerApplication] [TRACE_U123456_98765_100_1706803800] Received withdrawal request. Amount: $500, Account: 987654321.
+|||2025-02-01T16:10:00.126Z [DEBUG] [TellerApplication] [TRACE_U123456_98765_100_1706803800] Preparing SOAP request for AccountProcessSystem.
+|||2025-02-01T16:10:00.127Z [DEBUG] [TellerApplication] [TRACE_U123456_98765_100_1706803800] SOAP Request:
+<?xml version="1.0"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:mid="http://AccountProcessSystem.example.com/CustInfo">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <mid:GetCustomerInfoRequest>
+         <mid:AccountNumber>987654321</mid:AccountNumber>
+         <mid:CustomerId>1234123</mid:CustomerId>
+         <mid:CustomerName>John</mid:CustomerName>
+      </mid:GetCustomerInfoRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
+|||2025-02-01T16:10:00.130Z [INFO ] [AccountProcessSystem] [TRACE_U123456_98765_100_1706803800] Received SOAP request. Processing...
+|||2025-02-01T16:10:00.135Z [DEBUG] [AccountProcessSystem] [TRACE_U123456_98765_100_1706803800] Validating account information for Account: 987654321.
+|||2025-02-01T16:10:00.145Z [ERROR] [AccountProcessSystem] [TRACE_U123456_98765_100_1706803800] Account validation failed. Invalid account number format.
+|||2025-02-01T16:10:00.150Z [INFO ] [TellerApplication] [TRACE_U123456_98765_100_1706803800] Received failed response from AccountProcessSystem. Aborting transaction. Response time: 4 ms
+|||2025-02-01T16:10:00.155Z [DEBUG] [UI] [TRACE_U123456_98765_100_1706803800] Displaying error message to user: "Invalid account number format. Please check your details."
+|||2025-02-01T16:10:00.160Z [ERROR] [UI] [TRACE_U123456_98765_100_1706803800] User interaction failed. Unable to process withdrawal due to invalid account.
+|||2025-02-01T16:10:00.165Z [DEBUG] [TellerApplication] [TRACE_U123456_98765_100_1706803800] Transaction aborted due to validation failure.
+|||2025-02-01T16:10:05.210Z [INFO ] [UI] [TRACE_K987654_54321_200_1706803805] User initiated cash withdrawal request. Amount: $1000, Account: 543216789.
+|||2025-02-01T16:10:05.220Z [DEBUG] [UI] [TRACE_K987654_54321_200_1706803805] Sending withdrawal request to Spring Boot server.
+|||2025-02-01T16:10:05.225Z [INFO ] [TellerApplication] [TRACE_K987654_54321_200_1706803805] Received withdrawal request. Amount: $1000, Account: 543216789.
+|||2025-02-01T16:10:05.226Z [DEBUG] [TellerApplication] [TRACE_K987654_54321_200_1706803805] Preparing REST request for AccountProcessSystem.
+|||2025-02-01T16:10:05.227Z [DEBUG] [TellerApplication] [TRACE_K987654_54321_200_1706803805] REST Request:
+POST /api/v1/getCustomerInfo
+{
+   "accountNumber": "543216789",
+   "customerId": "81294",
+   "customerName": "Robert"
+}
+|||2025-02-01T16:10:05.235Z [INFO ] [AccountProcessSystem] [TRACE_K987654_54321_200_1706803805] Received REST request. Processing...
+|||2025-02-01T16:10:05.240Z [DEBUG] [AccountProcessSystem] [TRACE_K987654_54321_200_1706803805] Validating account information for Account: 543216789.
+|||2025-02-01T16:10:05.250Z [DEBUG] [AccountProcessSystem] [TRACE_K987654_54321_200_1706803805] Account validated successfully.
+|||2025-02-01T16:10:05.255Z [INFO ] [TellerApplication] [TRACE_K987654_54321_200_1706803805] Received successful response from AccountProcessSystem. Proceeding with transaction. Response time: 2 ms
+|||2025-02-01T16:10:05.255Z [DEBUG] [TellerApplication] [TRACE_K987654_54321_200_1706803805] REST Response:
+{
+   "status": "SUCCESS",
+   "accountNumber": "543216789",
+   "customerName": "Robert",
+   "balance": 15000.00
+}
+|||2025-02-01T16:10:05.260Z [DEBUG] [UI] [TRACE_K987654_54321_200_1706803805] Transaction approved. Displaying confirmation to user.
+|||2025-02-01T16:10:05.265Z [INFO ] [UI] [TRACE_K987654_54321_200_1706803805] User confirmed withdrawal completion.
+|||2025-02-01T16:10:05.270Z [DEBUG] [TellerApplication] [TRACE_K987654_54321_200_1706803805] Initiating Oracle DB insert query for transaction record.
+|||2025-02-01T16:10:05.275Z [DEBUG] [OracleDB] [TRACE_K987654_54321_200_1706803805] Executing query:
+INSERT INTO TRANSACTION_HISTORY (TRANSACTION_ID, ACCOUNT_NUMBER, AMOUNT, STATUS, TIMESTAMP)
+VALUES ('TXN987654', '543216789', 1000, 'COMPLETED', TO_DATE('2025-02-01 16:10:05', 'YYYY-MM-DD HH24:MI:SS'));
+|||2025-02-01T16:10:05.280Z [INFO ] [OracleDB] [TRACE_K987654_54321_200_1706803805] Transaction record inserted successfully. Transaction ID: TXN987654.
+|||2025-02-01T16:10:05.285Z [INFO ] [TellerApplication] [TRACE_K987654_54321_200_1706803805] Withdrawal transaction completed successfully. Transaction ID: TXN987654.
+|||2025-02-01T16:10:05.290Z [DEBUG] [UI] [TRACE_K987654_54321_200_1706803805] Transaction completion notification sent to user.
+|||2025-02-01T16:10:10.320Z [INFO ] [UI] [TRACE_U876543_12398_300_1706803810] User initiated cash withdrawal request. Amount: $200, Account: 123987654.
+|||2025-02-01T16:10:10.325Z [DEBUG] [UI] [TRACE_U876543_12398_300_1706803810] Sending withdrawal request to Spring Boot server.
+|||2025-02-01T16:10:10.330Z [INFO ] [TellerApplication] [TRACE_U876543_12398_300_1706803810] Received withdrawal request. Amount: $200, Account: 123987654.
+|||2025-02-01T16:10:10.340Z [DEBUG] [TellerApplication] [TRACE_U876543_12398_300_1706803810] Preparing REST request for AccountProcessSystem.
+|||2025-02-01T16:10:10.345Z [DEBUG] [TellerApplication] [TRACE_U876543_12398_300_1706803810] REST Request:
+POST /api/v1/getCustomerInfo
+{
+   "accountNumber": "123987654",
+   "customerId": "89213",
+   "customerName": "David"
+}
+|||2025-02-01T16:10:10.355Z [INFO ] [AccountProcessSystem] [TRACE_U876543_12398_300_1706803810] Received REST request. Processing...
+|||2025-02-01T16:10:10.360Z [DEBUG] [AccountProcessSystem] [TRACE_U876543_12398_300_1706803810] Validating account information for Account: 123987654.
+|||2025-02-01T16:10:10.370Z [ERROR] [AccountProcessSystem] [TRACE_U876543_12398_300_1706803810] Error occurred while validating account: Account number not found in database.
+|||2025-02-01T16:10:10.375Z [INFO ] [TellerApplication] [TRACE_U876543_12398_300_1706803810] Received failed response from AccountProcessSystem. Aborting transaction. Response time: 1 ms
+|||2025-02-01T16:10:10.375Z [DEBUG] [TellerApplication] [TRACE_U876543_12398_300_1706803810] REST Response:
+{
+   "status": "FAILED",
+   "errorCode": "ACCOUNT_NOT_FOUND",
+   "message": "Account number not found in database."
+}
+|||2025-02-01T16:10:10.380Z [DEBUG] [UI] [TRACE_U876543_12398_300_1706803810] Displaying error message to user: "Account number not found. Please check your details."
+|||2025-02-01T16:10:10.385Z [ERROR] [UI] [TRACE_U876543_12398_300_1706803810] User interaction failed. Unable to process withdrawal due to account not found.
+|||2025-02-01T16:10:10.390Z [DEBUG] [TellerApplication] [TRACE_U876543_12398_300_1706803810] Transaction aborted due to validation failure.
+|||2025-02-01T16:10:15.420Z [INFO ] [TellerApplication] [TRACE_K654321_00000_400_1706803815] Finalizing transaction and closing resources.
+|||2025-02-01T16:10:15.425Z [DEBUG] [TellerApplication] [TRACE_K654321_00000_400_1706803815] Closing database connections.
+|||2025-02-01T16:10:15.430Z [INFO ] [DatabaseConnectionPool] [TRACE_K654321_00000_400_1706803815] All database connections closed successfully.
+|||2025-02-01T16:10:15.435Z [DEBUG] [TellerApplication] [TRACE_K654321_00000_400_1706803815] Closing external API connections.
+|||2025-02-01T16:10:15.440Z [INFO ] [APIClient] [TRACE_K654321_00000_400_1706803815] All external API connections closed successfully.
+|||2025-02-01T16:10:15.445Z [INFO ] [TellerApplication] [TRACE_K654321_00000_400_1706803815] All pending sessions cleared.
+|||2025-02-01T16:10:15.450Z [INFO ] [UI] [TRACE_K654321_00000_400_1706803815] User session cleared and terminated.
+|||2025-02-01T16:10:15.455Z [INFO ] [TellerApplication] [TRACE_K654321_00000_400_1706803815] Application shutdown initiated.
+|||2025-02-01T16:10:15.460Z [DEBUG] [TellerApplication] [TRACE_K654321_00000_400_1706803815] Closing application context.
+|||2025-02-01T16:10:15.465Z [INFO ] [TellerApplication] [TRACE_K654321_00000_400_1706803815] Application context closed successfully.
+|||2025-02-01T16:10:15.470Z [INFO ] [TellerApplication] [TRACE_K654321_00000_400_1706803815] Application shutdown completed. All resources have been released.

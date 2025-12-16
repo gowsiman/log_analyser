@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogInsight AI - Splunk Log Analyzer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script defer src="{{ url_for('static', filename='js/script.js') }}"></script>
+</head>
+<body>
+    <script>
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+    <main class="container">
+        <header class="main-header">
+            <div class="container header-content">
+                <div class="branding">
+                    <h1>GenAI Log Analyzer</h1>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard">
+
+            <!-- SPINNER PANEL -->
+
+            <div id="spinner" class="spinner" style="display: none;">
+                <i class="fa fa-spinner fa-spin"></i>
+            </div>
+
+            <!-- Configuration Panel -->
+            <section class="config-panel">
+                <!-- Splunk Login Form Container -->
+                <div class="form-container">
+                    <h2 id="splunk-login-title">Splunk Login</h2>
+                    <form id="SplunkLoginForm">
+                        <div class="form-group">
+                            <label for="splunk-host">Host</label>
+                            <input type="text" class="input-field" placeholder="Host" id="splunk-host" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="splunk-port">Port</label>
+                            <input type="number" class="input-field" placeholder="Port" id="splunk-port" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="splunk-user">User Name</label>
+                            <input type="text" class="input-field" placeholder="Username" id="splunk-user" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="splunk-token">Password</label>
+                            <input type="password" class="input-field" placeholder="Password" id="splunk-token" required>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="testConnectionButton">Test Connection</button>
+                    </form>
+
+
+                    <!-- Question Form (Initially hidden) -->
+                    <form id="QuestionForm" style="display: none;">
+                        <h2 id="splunk-login-title">Frequently Asked Questions (FAQ)</h2>
+                        <ul id="question-list">
+                            <li class="question-item">Show me the error hotspots in the logs for the selected time window</li>
+                            <li class="question-item">Historical occurrence of payment failures in the last month</li>
+                            <li class="question-item">Assess transaction failures and customers impacted</li>
+                            <li class="question-item">Determine anomalies observed</li>
+                            <li class="question-item">Share the sequence of flow for a withdrawal transaction</li>
+                            <li class="question-item">Transaction latency and response time analysis</li>
+                            <li class="question-item">List the REST or SOAP URL endpoints application is communicating to</li>
+                        </ul>
+                    </form>
+                </div>
+
+                <!-- Splunk Configuration Form Container -->
+                <div class="form-container">
+                    <h2>Splunk Configuration</h2>
+                    <form id="logConfigForm">
+                        <div class="form-group">
+                            <label for="application-name">APP ID</label>
+                            <input type="text" class="input-field" id="application-name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="source-type">Splunk Source Type</label>
+                            <select class="input-field" id="source-type" required>
+                                <option value="">Select Source Type</option>
+                                <option>syslog</option>
+                                <option>springboot</option>
+                                <option>custom:app</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group time-range-group">
+                            <div>
+                                <label for="start-time">Start Time</label>
+                                <input type="datetime-local" class="input-field" id="start-time" required>
+                            </div>
+                            <div>
+                                <label for="end-time">End Time</label>
+                                <input type="datetime-local" class="input-field" id="end-time" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-query">Query</label>
+                            <input type="text" class="input-field" id="input-query" placeholder="Enter your query" required>
+
+                            <div id="suggestions-container" style="display: none;">
+                                <button id="prev-suggestion" class="nav-button"><</button>
+                                <div id="suggestion-bubble">
+                                    <span id="suggestion-text"></span>
+                                    <div id="suggestion-counter"></div>
+                                </div>
+                                <button id="next-suggestion" class="nav-button">></button>
+                            </div>
+
+                        </div>
+
+                        <button type="submit" class="btn-primary" id="analyze-logs-button">Analyze Logs</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Analysis Panel -->
+            <section class="analysis-panel">
+                <div class="results-tabs">
+                    <button class="tab-button active" id="rawLogs-tab-button">Raw Logs</button>
+                    <button class="tab-button" id="AIAnalysis-tab-button">AI Analysis</button>
+                    <button class="tab-button" id="happyPath-tab-button">Happy Path</button>
+                </div>
+
+                <pre class="log-display" id="logOutput"></pre>
+
+                <div class="ai-analysis">
+                    <h3>RAG-Powered Analysis</h3>
+                    <p>🔍 The RAG (Retrieval Augmented Generation) Based Log Analyzer significantly reduces the time and effort required to sift through vast log data, improving overall system monitoring and troubleshooting processes.
+                        It leverages advanced retrieval techniques to source relevant information and generate insightful summaries.
+                        Its effectiveness lies in combining retrieval and generative capabilities for a comprehensive and streamlined log analysis experience.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+</body>
+</html>

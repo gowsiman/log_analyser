@@ -1,0 +1,155 @@
+2024-03-15T09:22:15.789Z INFO  AUTH-SERVICE        CID-q1w2e3r4 - User authentication initiated {user: "customer_9245", device_id: "DX-924X", ip: "192.168.2.30", auth_type: "OAuth2.0"}
+2024-03-15T09:22:16.445Z ERROR CACHE-MANAGER       CID-q1w2e3r4 - Session token cache failure {error: "Redis CLUSTERDOWN", fallback: "local_mem", ttl: 300}  # Error 1
+2024-03-15T09:22:17.112Z INFO  TXN-SERVICE         CID-t5y6u7i8 - Transaction initiated {type: "CROSS_BORDER", amount: 4500.00, source: "ACC-924577", dest: "ACC-632199", initiator: "customer_9245"}
+2024-03-15T09:22:18.332Z WARN  FRAUD-CHECK         CID-t5y6u7i8 - Unverified device pattern {score: 0.58, patterns: ["GEO_MISMATCH"], limits: {"daily_max": 10000.00, "used": 9200.00}}
+2024-03-15T09:22:19.445Z INFO  DB-CONNECTOR        CID-t5y6u7i8 - Atomic transaction started {operation: "DEBIT_CREDIT_PAIR", isolation_level: "READ_COMMITTED", retry_count: 0}
+2024-03-15T09:22:20.901Z ERROR LEDGER-SERVICE      CID-t5y6u7i8 - Double-entry validation failed {
+  "debit_account": "ACC-924577",
+  "credit_account": "ACC-632199",
+  "error": "CREDIT_AMOUNT_MISMATCH",
+  "expected": 4500.00,
+  "actual": 4495.00
+}  # Error 2
+2024-03-15T09:22:21.112Z INFO  NOTIFICATION-SERV   CID-t5y6u7i8 - Partial confirmation sent {channels: ["SMS"], user: "customer_9245", txn_ref: "TXN-924XKJ"}
+2024-03-15T09:22:22.556Z DEBUG DB-CONNECTOR        CID-t5y6u7i8 - Connection pool status {active: 14, idle: 6, max: 20, wait_time_ms: 15}
+2024-03-15T09:22:23.778Z INFO  API-GATEWAY         CID-o9p0a1s2 - Third-party payment gateway handshake failed {provider: "SWIFT", error: "TLS_CERT_EXPIRED", retry_in: "5m"}  # Error 3
+2024-03-15T09:22:24.889Z INFO  SCHEDULER-SERVICE   CID-f3g4h5j6 - Daily interest calculation delayed {reason: "GL_LOCK_TIMEOUT", eta: "09:25:00Z"}
+2024-03-15T09:22:25.001Z DEBUG CARD-SERVICE        CID-k7l8z9x0 - Virtual card provisioning retry {user: "customer_4382", attempts: 2/3, error: "KMS_KEY_ROTATION_IN_PROGRESS"}
+2024-03-15T09:22:26.112Z INFO  SECURITY-SERVICE    CID-q1w2e3r4 - New device MFA completed successfully {device_id: "DX-924X", method: "TOTP", auth_score: 9.8/10}
+2024-03-15T09:23:45.001Z INFO  LOAD-BALANCER       CID-m2n3b4v5 - Request routed to cluster-node-7 {zone: "us-west-2a", cpu_load: 42%, mem_usage: 58%, active_conns: 765}
+2024-03-15T09:23:46.223Z DEBUG RATE-LIMITER        CID-t5y6u7i8 - Transaction throttling check passed {window: "10/sec", count: 6, policy: "retail-tier-2"}
+2024-03-15T09:23:47.445Z INFO  CARD-SERVICE        CID-d4c5v6b7 - Physical card activation sequence completed {card_id: "PHY-924XZZ", branch: "LAX-901", activation_code: "ENCRYPTED_AES256:0x82B4E..."}
+2024-03-15T09:23:48.901Z INFO  FX-SERVICE          CID-h8j9k0l1 - Currency conversion executed {from: "USD", to: "GBP", amount: 3200.00, rate: 0.7911, markup: 0.68%, trace_id: "FXTR-2303150923"}
+2024-03-15T09:23:49.112Z DEBUG DB-CONNECTOR        CID-t5y6u7i8 - Transaction commit confirmed {latency: "142ms", write_ops: 5, lock_wait_time: "7ms"}
+2024-03-15T09:23:50.334Z INFO  API-GATEWAY         CID-o9p0a1s2 - Webhook notification delivered {endpoint: "https://vendor.com/webhooks", status: 202, retries: 0, checksum: "SHA-256:8c4fd2..."}
+2024-03-15T09:23:51.556Z INFO  RECONCILIATION      CID-f3g4h5j6 - GL balancing check passed {period: "INTRADAY", variance: 0.00, entries_checked: 14,239}
+2024-03-15T09:23:52.667Z DEBUG SESSION-STORE       CID-q1w2e3r4 - Session heartbeat updated {last_active: "2024-03-15T09:23:52.667Z", expiry: "2024-03-15T10:23:52.667Z"}
+2024-03-15T09:23:53.889Z INFO  COMPLIANCE          CID-t5y6u7i8 - AML check cleared {regulation: "FATF-16", risk_indicator: "GREEN", scan_duration: "380ms"}
+2024-03-15T09:23:54.001Z INFO  MQ-CONSUMER         CID-k7l8z9x0 - Event processed from queue: txn_audit_queue {offset: 9245, partition: 5, latency: 52ms}
+2024-03-15T09:23:55.123Z DEBUG NETWORK-SERVICE     CID-m2n3b4v5 - Zero Trust policy enforced {src_ip: 192.168.2.30, dest_service: "CARD-DB", action: "ALLOW", auth_context: ["MFA", "IP_WHITELIST"]}
+2024-03-15T09:23:56.445Z INFO  KMS-PROVIDER        CID-d4c5v6b7 - Data encryption completed {algorithm: "AES-256-GCM", key_id: "KMS-924XFD", size: "3.2KB", latency: 45ms}
+2024-03-15T09:23:57.556Z INFO  CACHE-INVALIDATOR   CID-h8j9k0l1 - FX rate cache refreshed {pairs: ["USD/GBP", "EUR/JPY"], source: "Bloomberg", ttl: 300}
+2024-03-15T09:24:12.334Z INFO  TXN-REVERSAL        CID-t5y6u7i8 - Rollback protocol initiated {reason: "SYSTEM_ERROR", txn_ref: "TXN-924XKJ", compensation_ops: [
+  {"service": "LEDGER", "action": "REVERSE_JRNL", "ref": "JRNL-202403159245"},
+  {"service": "NOTIFICATION", "action": "SEND_REVERSAL_ALERT"}
+]}
+2024-03-15T09:24:13.556Z DEBUG LEDGER-SERVICE      CID-t5y6u7i8 - Journal reversal executed {original_entry: "JRNL-202403159245", new_balance: {
+  "ACC-924577": 87500.00,
+  "ACC-632199": 21800.00
+}, audit_ref: "JRNL-202403159246"}
+2024-03-15T09:24:14.667Z INFO  BATCH-PROCESSOR     CID-w2x3y4z5 - End-of-day statements generated {users_processed: 25,392, avg_size: "4.5KB", storage_path: "s3://batch-prod/statements/2024-03-15/"}
+2024-03-15T09:24:15.789Z DEBUG DB-CONNECTOR        CID-m2n3b4v5 - Read replica sync latency within thresholds {primary: 48ms, replica_1: 55ms, replica_2: 51ms, max_allowed: 150ms}
+2024-03-15T09:24:16.901Z INFO  CUSTOMER-SUPPORT    CID-d4c5v6b7 - Case resolution logged {case_id: "SUPT-924XFD", agent: "AI-BOT-4", resolution: "MANUAL_OVERRIDE", sla_met: false}
+2024-03-15T09:24:17.123Z INFO  BACKUP-SERVICE      CID-o9p0a1s2 - Incremental backup completed {database: "CARD-TXN-STORE", size: "26GB", duration: "8m 45s", encryption: "AES-256-CTR", version: "bkp-202403150924"}
+2024-03-15T09:24:18.445Z DEBUG API-HEALTH          CID-k7l8z9x0 - Dependency status check passed {services: [
+  {"name": "SWIFT", "latency": 95ms, "status": 200},
+  {"name": "VISA_DIRECT", "latency": 155ms, "status": 200}
+], threshold: 300ms}
+2024-03-15T09:24:19.556Z INFO  CONFIG-MANAGER      CID-h8j9k0l1 - Runtime config reloaded {version: "3.12.1", changes: [
+  {"key": "max_txn_amount", "old": 100000.00, "new": 250000.00},
+  {"key": "otp_expiry", "old": 300, "new": 180}
+], checksum: "SHA3-256:8e4b72d..."}
+2024-03-15T09:24:20.667Z DEBUG SSL-TERMINATOR      CID-q1w2e3r4 - TLS 1.3 handshake completed {cipher: "TLS_AES_256_GCM_SHA384", client: "iOS/17", session_resumed: false}
+2024-03-15T09:24:21.889Z INFO  AUDIT-TRAIL         CID-t5y6u7i8 - Immutable audit record created {hash: "BLAKE3-8e4b7...", storage: "QRadar", chain_ref: "BLOCK-924XCC"}
+2024-03-15T09:24:22.001Z INFO  CERTIFICATE-MGR     CID-f3g4h5j6 - Auto-renewal completed {domain: "api.bank.com", issuer: "DigiCert", expires: "2024-06-15", san: ["*.bank.com"]}
+2024-03-15T09:24:23.112Z DEBUG LOAD-SHEDDER        CID-m2n3b4v5 - Adaptive throttling engaged {metric: "CPU_LOAD", current: 65%, threshold: 70%, rejected_requests: 9}
+2024-03-15T09:25:05.678Z INFO  IOT-PROVISIONING    CID-r5s6t7u8 - Smartwatch paired successfully {device: "AppleWatch-9", os: "watchOS 10", cert_expiry: "2025-03-15", protocol: "MTLS-1.3"}
+2024-03-15T09:25:06.789Z DEBUG GEOLOCATION-SERVICE CID-q1w2e3r4 - Transaction location verified {user_ip: "192.168.2.30", device_gps: "34.0522,-118.2437", mismatch_threshold: "0.5km"}
+2024-03-15T09:25:07.891Z INFO  LOAN-SERVICE        CID-v9w0x1y2 - Auto-approval processed {application_id: "LOAN-924XHJ", amount: 35000.00, risk_tier: "B1", decision_model: "v3.1.9"}
+2024-03-15T09:25:08.912Z DEBUG CACHE-MANAGER       CID-m2n3b4v5 - Localized FX rates cache hit {currency_pair: "USD/GBP", rate: 0.7911, source: "Redis-Shard-5", ttl_remaining: 138s}
+2024-03-15T09:25:09.123Z INFO  DATA-LAKE-INGEST    CID-f3g4h5j6 - Real-time telemetry flushed {records: 14,239, size: "53MB", destination: "s3://analytics-prod/raw/2024-03-15/09/"}
+2024-03-15T09:25:10.445Z DEBUG OTP-SERVICE         CID-d4c5v6b7 - Time-based OTP generated {user: "customer_4382", method: "SMS", entropy: 97.3, validity: "180s"}
+2024-03-15T09:25:11.556Z INFO  CSR-GENERATOR       CID-h8j9k0l1 - Certificate signing request completed {domain: "internal.bank.com", key_strength: 4096, san_count: 4, ca: "Internal-PKI-2"}
+2024-03-15T09:25:12.667Z DEBUG SHADOW-DB           CID-t5y6u7i8 - Canary write verified {primary_hash: "SHA3-512:8e4b...", shadow_hash: "SHA3-512:8e4b...", latency_diff: 15ms}
+2024-03-15T09:25:13.789Z INFO  FEE-CALCULATOR      CID-k7l8z9x0 - Dynamic pricing applied {txn_type: "CROSS_BORDER", amount: 4500.00, fee: 14.75, algorithm: "region_based_v3"}
+2024-03-15T09:25:14.901Z DEBUG NETWORK-HEALER      CID-m2n3b4v5 - Automatic circuit breaker reset {failed_endpoint: "SWIFT", retry_success: true, downtime: "1m 45s"}
+2024-03-15T09:25:15.123Z INFO  DOCUMENT-SIGNER     CID-o9p0a1s2 - Digital signature applied {doc_id: "LOAN-924XHJ-AGREEMENT", algo: "ECDSA-P384", timestamp: "2024-03-15T09:25:15.123Z", ts_cert: "DigiCert"}
+2024-03-15T09:25:16.445Z DEBUG DB-FAILOVER         CID-t5y6u7i8 - Warm standby activation test passed {primary: "us-west-2", replica: "us-east-1", sync_lag: 480ms, max_tolerable: 2s}
+2024-03-15T09:25:17.556Z INFO  QUOTA-MANAGER       CID-q1w2e3r4 - Spending limit updated {user: "customer_9245", new_daily_limit: 15000.00, effective_immediately: true}
+2024-03-15T09:25:18.667Z DEBUG API-CIRCUIT-BREAKER CID-v9w0x1y2 - Health check passed {endpoint: "/api/loan/status", error_rate: 0.03%, threshold: 1%, window: "5m"}
+2024-03-15T09:26:30.112Z INFO  ACCOUNT-MGMT       CID-z3a4b5c6 - New current account created {account_no: "ACC-632199", type: "CORPORATE", currency: "GBP", tier: "PREMIUM", kyc_status: "VERIFIED"}
+2024-03-15T09:26:31.445Z DEBUG FUNDS-TRANSFER     CID-t5y6u7i8 - Inter-account transfer validated {source: "ACC-924577", dest: "ACC-632199", amount: 4500.00, balance_check: [
+  {"account":"ACC-924577", "available": 83000.00, "ledger": 83500.00},
+  {"account":"ACC-632199", "available": 4500.00, "ledger": 4500.00}
+]}
+2024-03-15T09:26:32.556Z INFO  LOAN-SERVICING     CID-p5q6r7s8 - Loan disbursement processed {loan_id: "LN-924XFD", amount: 120000.00, account: "ACC-632199", emi_start: "2024-04-01", schedule: "MONTHLY_ANN"}
+2024-03-15T09:26:33.789Z DEBUG CORE-LEDGER        CID-t5y6u7i8 - GL entries updated {entries: [
+  {"account":"ACC-924577", "type":"DEBIT", "value_date": "2024-03-15", "amount":4500.00},
+  {"account":"ACC-632199", "type":"CREDIT", "value_date": "2024-03-15", "amount":4500.00}
+], narration: "CORPORATE_FUNDING"}
+2024-03-15T09:26:34.901Z INFO  INTEREST-ENGINE    CID-z3a4b5c6 - Daily interest accrued {account: "ACC-632199", rate: 3.45% pa, days: 1, amount: 0.52, balance: 4500.52}
+2024-03-15T09:26:35.123Z DEBUG FRAUD-MONITOR      CID-t5y6u7i8 - Velocity check passed {account: "ACC-924577", 24h_debits: 4500.00, pattern: "REGULAR_BUSINESS", threshold: 25000.00}
+2024-03-15T09:26:36.445Z INFO  STANDING-INSTR      CID-p5q6r7s8 - Recurring payment mandate registered {source: "ACC-632199", dest: "VENDOR-924X", amount: 1500.00, frequency: "MONTHLY_1ST", end_date: "2024-12-31"}
+2024-03-15T09:26:37.556Z DEBUG SWIFT-GATEWAY      CID-v9w0x1y2 - MT103 message generated {uuid: "SWIFT-2303150926", sender: "ACC-632199", receiver: "BOFAUS3NXXX", amount: 35000.00, currency: "GBP"}
+2024-03-15T09:26:38.667Z INFO  CASH-MANAGEMENT    CID-z3a4b5c6 - Liquidity report generated {date: "2024-03-15", total_assets: 135000000.00, cash_reserve_ratio: 13.1%, required: 11.8%}
+2024-03-15T09:26:39.789Z INFO  COLLECTIONS        CID-p5q6r7s8 - Auto-debit processed {loan_id: "LN-924XFD", emi_amount: 4250.00, due_date: "2024-04-01", status: "SCHEDULED"}
+2024-03-15T09:26:40.901Z DEBUG COMPLIANCE-CHECK   CID-t5y6u7i8 - FATCA validation passed {account: "ACC-632199", tin: "12-3456789", country_code: "GB", reporting_status: "EXEMPT"}
+2024-03-15T09:26:41.123Z INFO  CARD-PROCESSING    CID-d4c5v6b7 - Corporate card linked {account: "ACC-632199", card_no: "5XXX-XXXX-XXXX-7821", limit: 35000.00, expense_categories: ["TRAVEL", "IT"]}
+2024-03-15T09:26:42.445Z DEBUG CUSTOMER-SUPPORT   CID-z3a4b5c6 - Address change processed {account: "ACC-632199", old: "1 Canada Square", new: "25 Bank Street", verification: "DOCUMENT_UPLOAD"}
+2024-03-15T09:26:43.556Z INFO  DEPOSIT-SERVICE    CID-p5q6r7s8 - Fixed deposit renewed {account: "ACC-632199", amount: 60000.00, tenure: "12M", rate: 5.3%, maturity: "2025-03-15"}
+2024-03-15T09:26:44.667Z DEBUG CORE-BATCH         CID-t5y6u7i8 - End-of-day balancing initiated {subsystems: [
+  {"name": "SAVINGS", "count": 152,392},
+  {"name": "LOANS", "count": 82,321},
+  {"name": "CARDS", "count": 92,231}
+], expected_duration: "25m 12s"}
+2024-03-15T09:26:45.789Z INFO  REG-REPORTING      CID-v9w0x1y2 - Basel III liquidity coverage ratio filed {lcr: 130%, requirement: 100%, report_date: "2024-03-15", submission_id: "BASEL-2024031592645"}
+2024-03-15T09:26:46.901Z DEBUG CHECK-PROCESSING   CID-z3a4b5c6 - Check deposit cleared {check_no: "CHK-924XZZ", amount: 8500.00, micr: "987654321", hold_released: true}
+2024-03-15T09:26:47.123Z INFO  CUSTODY-SERVICE    CID-p5q6r7s8 - Securities settlement completed {isin: "US0231351067", quantity: 150, settlement_type: "T+2", safekeep_account: "CUST-924XFD"}
+2024-03-15T09:26:48.445Z DEBUG CORRESPONDENT-BANK CID-t5y6u7i8 - Nostro account reconciliation passed {currency: "GBP", expected: 950000.00, actual: 950000.00, variance: 0.00}
+
+2024-03-15T09:27:55.123Z INFO  BATCH-PROCESSOR     CID-t5y6u7i8 - End-of-day operations completed successfully {
+  "accounts_balanced": 1,382,921,
+  "transactions_processed": 912,345,
+  "reports_generated": ["GL_SUMMARY", "RISK_EXPOSURE", "LIQUIDITY"],
+  "duration": "1h 15m"
+}
+
+2024-03-15T09:27:56.445Z DEBUG DB-CONNECTOR        CID-m2n3b4v5 - Connection pool drained gracefully {
+  "active_connections": 0,
+  "idle_connections": 0,
+  "max_used": 19,
+  "total_queries": 1,389,402
+}
+
+2024-03-15T09:27:57.556Z INFO  API-GATEWAY         CID-o9p0a1s2 - Graceful shutdown initiated {
+  "active_sessions": 18,
+  "draining_mode": true,
+  "completion_time": "40s"
+}
+
+2024-03-15T09:27:58.667Z INFO  CERTIFICATE-MGR     CID-f3g4h5j6 - Offline renewal scheduled {
+  "next_rotation": "2024-03-16T03:00:00Z",
+  "domains": ["*.bank.com", "api.payments.bank"],
+  "issuer": "DigiCert"
+}
+
+2024-03-15T09:27:59.789Z DEBUG CACHE-MANAGER       CID-d4c5v6b7 - Redis cluster flushed to disk {
+  "keys_persisted": 1,982,345,
+  "shards": [3, 5, 7],
+  "duration": "8.5s"
+}
+
+2024-03-15T09:28:00.901Z INFO  SECURITY-SERVICE    CID-k7l8z9x0 - Ephemeral keys destroyed {
+  "keys_rotated": 152,
+  "vault_health_check": "OK",
+  "tpm_audit": "PASSED"
+}
+
+2024-03-15T09:28:01.123Z INFO  NETWORK-OPERATIONS  CID-m2n3b4v5 - Maintenance window activated {
+  "duration": "4h",
+  "activities": [
+    "PATCH_ROUTERS",
+    "IDS_RULES_UPDATE",
+    "BGP_PEERING_REFRESH"
+  ]
+}
+
+2024-03-15T09:28:02.445Z DEBUG SERVICE-MANAGER     CID-* - All subsystems shut down {
+  "status": {
+    "CORE-LEDGER": "STANDBY",
+    "FRAUD-MONITOR": "OFFLINE",
+    "API-GATEWAY": "TERMINATED"
+  },
+  "uptime": "23h 58m",
+  "scheduled_restart": "2024-03-15T09:30:00Z"
+}

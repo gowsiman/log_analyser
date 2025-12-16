@@ -1,0 +1,85 @@
+2025-02-01T15:10:00.000Z [INFO ] [UI] [TRACE_U123456_000001_100_1709146000] User initiated funds transfer request. Amount: $1000, From Account: 246810123, To Account: 135791357.
+|||2025-02-01T15:10:00.005Z [DEBUG] [UI] [TRACE_U123456_000001_100_1709146000] Sending transfer request to Spring Boot server.
+|||2025-02-01T15:10:00.010Z [INFO ] [TellerApplication] [TRACE_U123456_000001_100_1709146000] Received transfer request. From Account: 246810123, To Account: 135791357, Amount: $1000.
+|||2025-02-01T15:10:00.015Z [DEBUG] [TellerApplication] [TRACE_U123456_000001_100_1709146000] Initiating validation for source account.
+|||2025-02-01T15:10:00.020Z [INFO ] [TellerApplication] [TRACE_U123456_000001_100_1709146000] Account validation successful for source account: 246810123.
+|||2025-02-01T15:10:00.025Z [DEBUG] [TellerApplication] [TRACE_U123456_000001_100_1709146000] Preparing REST request for AccountProcessSystem.
+|||2025-02-01T15:10:00.030Z [DEBUG] [TellerApplication] [TRACE_U123456_000001_100_1709146000] REST Request:
+POST /AccountProcessSystem/corebanking/debit HTTP/1.1
+Host: AccountProcessSystem.example.com
+Content-Type: application/json
+{
+   "accountNumber": "246810123",
+   "amount": 1000,
+   "transactionType": "DEBIT"
+}
+|||2025-02-01T15:10:00.035Z [INFO ] [AccountProcessSystem] [TRACE_U123456_000001_100_1709146000] Received debit request for Account: 246810123, Amount: $1000. Processing...
+|||2025-02-01T15:10:00.040Z [DEBUG] [AccountProcessSystem] [TRACE_U123456_000001_100_1709146000] Verifying balance for account: 246810123.
+|||2025-02-01T15:10:00.045Z [INFO ] [AccountProcessSystem] [TRACE_U123456_000001_100_1709146000] Debit transaction successful. Remaining balance: $5000.
+|||2025-02-01T15:10:00.050Z [DEBUG] [AccountProcessSystem] [TRACE_U123456_000001_100_1709146000] REST Response:
+{
+   "status": "SUCCESS",
+   "transactionId": "TXN123",
+   "message": "Debit transaction completed successfully.",
+   "responseTime": "2 ms"
+}
+|||2025-02-01T15:10:00.055Z [INFO ] [TellerApplication] [TRACE_U123456_000001_100_1709146000] Debit transaction confirmed. Proceeding with credit to recipient account: 135791357.
+|||2025-02-01T15:10:00.060Z [DEBUG] [TellerApplication] [TRACE_U123456_000002_200_1709146000] Preparing REST request for AccountProcessSystem (credit).
+|||2025-02-01T15:10:00.065Z [DEBUG] [TellerApplication] [TRACE_U123456_000002_200_1709146000] REST Request:
+POST /AccountProcessSystem/corebanking/credit HTTP/1.1
+Host: AccountProcessSystem.example.com
+Content-Type: application/json
+{
+   "accountNumber": "135791357",
+   "transactionId": "TXN123",
+   "amount": 1000,
+   "transactionType": "CREDIT"
+}
+|||2025-02-01T15:10:00.070Z [INFO ] [AccountProcessSystem] [TRACE_U123456_000002_200_1709146000] Received credit request for Account: 135791357, Amount: $1000. Processing...
+|||2025-02-01T15:10:00.075Z [DEBUG] [AccountProcessSystem] [TRACE_U123456_000002_200_1709146000] Verifying recipient account: 135791357.
+|||2025-02-01T15:10:00.080Z [INFO ] [AccountProcessSystem] [TRACE_U123456_000002_200_1709146000] Credit transaction successful. New balance: $2500.
+|||2025-02-01T15:10:00.085Z [DEBUG] [AccountProcessSystem] [TRACE_U123456_000002_200_1709146000] REST Response:
+{
+   "status": "SUCCESS",
+   "transactionId": "TXN123",
+   "message": "Credit transaction completed successfully.",
+   "responseTime": "8 ms"
+}
+|||2025-02-01T15:10:00.090Z [INFO ] [TellerApplication] [TRACE_U123456_000002_200_1709146000] Credit transaction confirmed. Finalizing funds transfer.
+|||2025-02-01T15:10:00.095Z [DEBUG] [TellerApplication] [TRACE_U123456_000002_200_1709146000] Initiating transaction record update in OracleDB.
+|||2025-02-01T15:10:00.100Z [DEBUG] [OracleDB] [TRACE_U123456_000002_200_1709146000] Executing query:
+INSERT INTO TRANSACTION_HISTORY (TRANSACTION_ID, FROM_ACCOUNT, TO_ACCOUNT, AMOUNT, STATUS, TIMESTAMP)
+VALUES ('TXN123', '246810123', '135791357', 1000, 'COMPLETED', TO_TIMESTAMP('2025-02-01T15:10:00.100Z', 'YYYY-MM-DD"T"HH24:MI:SS.FF3"Z"'));
+|||2025-02-01T15:10:00.105Z [INFO ] [OracleDB] [TRACE_U123456_000002_200_1709146000] Transaction record inserted successfully. Transaction ID: TXN123.
+|||2025-02-01T15:10:00.110Z [INFO ] [TellerApplication] [TRACE_U123456_000002_200_1709146000] Transaction successfully recorded in DB. Proceeding to complete transaction.
+|||2025-02-01T15:10:00.115Z [DEBUG] [TellerApplication] [TRACE_U123456_000002_200_1709146000] Preparing notification request for user.
+|||2025-02-01T15:10:00.120Z [DEBUG] [TellerApplication] [TRACE_U123456_000002_200_1709146000] REST Request:
+POST /notification/send HTTP/1.1
+Host: notification.example.com
+Content-Type: application/json
+{
+   "recipient": "+9876543210",
+   "message": "Your transfer of $1000 from account 246810123 to account 135791357 has been completed successfully. Transaction ID: TXN123.",
+   "type": "SMS"
+}
+|||2025-02-01T15:10:00.125Z [INFO ] [NotificationService] [TRACE_U123456_000002_200_1709146000] Received notification request. Sending SMS...
+|||2025-02-01T15:10:00.130Z [DEBUG] [NotificationService] [TRACE_U123456_000002_200_1709146000] Sending SMS to +9876543210.
+|||2025-02-01T15:10:00.135Z [INFO ] [NotificationService] [TRACE_U123456_000002_200_1709146000] Notification sent successfully.
+|||2025-02-01T15:10:00.140Z [DEBUG] [TellerApplication] [TRACE_U123456_000002_200_1709146000] Notification service response received. Logging transaction completion.
+|||2025-02-01T15:10:00.145Z [DEBUG] [TellerApplication] [TRACE_U123456_000002_200_1709146000] Initiating audit log entry in LoggingService.
+|||2025-02-01T15:10:00.150Z [DEBUG] [LoggingService] [TRACE_U123456_000002_200_1709146000] Executing log entry:
+{
+   "transactionId": "TXN123",
+   "accountFrom": "246810123",
+   "accountTo": "135791357",
+   "amount": 1000,
+   "status": "COMPLETED",
+   "timestamp": "2025-02-01T15:10:00.150Z",
+   "responseTime": "9 ms"
+}
+|||2025-02-01T15:10:00.155Z [INFO ] [LoggingService] [TRACE_U123456_000002_200_1709146000] Audit log entry successfully recorded.
+|||2025-02-01T15:10:00.160Z [INFO ] [TellerApplication] [TRACE_U123456_000002_200_1709146000] Transaction completed. Cleaning up session.
+|||2025-02-01T15:10:00.165Z [DEBUG] [TellerApplication] [TRACE_U123456_000002_200_1709146000] Session cleanup initiated for user session: SESSION123456.
+|||2025-02-01T15:10:00.170Z [INFO ] [TellerApplication] [TRACE_U123456_000002_200_1709146000] Session cleanup successful. Transaction lifecycle completed.
+|||2025-02-01T15:10:00.175Z [DEBUG] [UI] [TRACE_U123456_000002_200_1709146000] Displaying success message to user.
+|||2025-02-01T15:10:00.180Z [INFO ] [UI] [TRACE_U123456_000002_200_1709146000] User acknowledged transaction completion.

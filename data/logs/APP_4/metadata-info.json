@@ -1,0 +1,27 @@
+{
+    "APP_ID": {
+        "name": "Application ID",
+        "description": "A unique identifier for the application that generated this log entry.",
+        "type": "string"
+    },
+    "Timestamp": {
+        "name": "Timestamp",
+        "description": "The time at which the log entry was generated.",
+        "type": "number"
+    },
+    "LogLevel": {
+        "name": "Log Level",
+        "description": "The severity level of the log message.",
+        "type": "string"
+    },
+    "SourceComponent": {
+        "name": "Source Component",
+        "description": "The name of the component that generated the log entry.",
+        "type": "string"
+    },
+    "TraceID": {
+        "name": "Trace ID",
+        "description": "A unique identifier for the trace that contains this log entry.",
+        "type": "string"
+    }
+}

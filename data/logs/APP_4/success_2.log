@@ -1,0 +1,122 @@
+2025-02-01T16:00:00.000Z [INFO ] [UI] [TRACE_K981234_000123_100_1580563200] User initiated funds transfer. Amount: $500, From: 789456123, To: 654123987.
+|||2025-02-01T16:00:00.005Z [DEBUG] [UI] [TRACE_K981234_000123_100_1580563200] Sending transfer request to backend.
+|||2025-02-01T16:00:00.010Z [INFO ] [TellerApplication] [TRACE_K981234_000123_100_1580563200] Received transfer request. Validating input.
+|||2025-02-01T16:00:00.015Z [DEBUG] [TellerApplication] [TRACE_K981234_000123_100_1580563200] Checking account status for 789456123.
+|||2025-02-01T16:00:00.020Z [INFO ] [TellerApplication] [TRACE_K981234_000123_100_1580563200] Account 789456123 validation successful.
+|||2025-02-01T16:00:00.025Z [DEBUG] [TellerApplication] [TRACE_K981234_000123_100_1580563200] Preparing debit request to AccountProcessSystem.
+|||2025-02-01T16:00:00.030Z [DEBUG] [TellerApplication] [TRACE_K981234_000123_100_1580563200] REST Request:
+POST /AccountProcessSystem/corebanking/debit
+{
+   "accountNumber": "789456123",
+   "amount": 500,
+   "transactionType": "DEBIT"
+}
+|||2025-02-01T16:00:00.035Z [INFO ] [AccountProcessSystem] [TRACE_K981234_000123_100_1580563200] Processing debit request for account 789456123.
+|||2025-02-01T16:00:00.040Z [DEBUG] [AccountProcessSystem] [TRACE_K981234_000123_100_1580563200] Checking account balance.
+|||2025-02-01T16:00:00.045Z [INFO ] [AccountProcessSystem] [TRACE_K981234_000123_100_1580563200] Debit successful. Remaining balance: $4500.
+|||2025-02-01T16:00:00.050Z [DEBUG] [AccountProcessSystem] [TRACE_K981234_000123_100_1580563200] REST Response:
+{
+   "status": "SUCCESS",
+   "transactionId": "TXN123450",
+   "message": "Debit successful",
+   "responseTime": "3 ms"
+}
+|||2025-02-01T16:00:00.055Z [INFO ] [TellerApplication] [TRACE_K981234_000123_100_1580563200] Debit confirmed. Initiating credit request.
+|||2025-02-01T16:00:00.060Z [DEBUG] [TellerApplication] [TRACE_U777888_000123_200_1580563200] Preparing credit request.
+|||2025-02-01T16:00:00.065Z [DEBUG] [TellerApplication] [TRACE_U777888_000123_200_1580563200] REST Request:
+POST /AccountProcessSystem/corebanking/credit
+{
+   "accountNumber": "654123987",
+   "amount": 500,
+   "transactionId": "TXN123450",
+   "transactionType": "CREDIT"
+}
+|||2025-02-01T16:00:00.070Z [INFO ] [AccountProcessSystem] [TRACE_U777888_000123_200_1580563200] Processing credit request.
+|||2025-02-01T16:00:00.075Z [DEBUG] [AccountProcessSystem] [TRACE_U777888_000123_200_1580563200] Validating recipient account.
+|||2025-02-01T16:00:00.080Z [INFO ] [AccountProcessSystem] [TRACE_U777888_000123_200_1580563200] Credit successful. New balance: $3500.
+|||2025-02-01T16:00:00.085Z [DEBUG] [AccountProcessSystem] [TRACE_U777888_000123_200_1580563200] REST Response:
+{
+   "status": "SUCCESS",
+   "transactionId": "TXN123450",
+   "message": "Credit successful",
+   "responseTime": "2 ms"
+}
+|||2025-02-01T16:00:00.090Z [INFO ] [TellerApplication] [TRACE_U777888_000123_200_1580563200] Credit transaction confirmed.
+|||2025-02-01T16:00:00.095Z [DEBUG] [TellerApplication] [TRACE_U555666_000123_888_1580563200] Logging transaction to database.
+|||2025-02-01T16:00:00.100Z [DEBUG] [OracleDB] [TRACE_U555666_000123_888_1580563200] Executing query:
+INSERT INTO TRANSACTION_HISTORY (TRANSACTION_ID, FROM_ACCOUNT, TO_ACCOUNT, AMOUNT, STATUS, TIMESTAMP)
+VALUES ('TXN123450', '789456123', '654123987', 500, 'COMPLETED', TO_TIMESTAMP('2025-02-01T16:00:00.100Z', 'YYYY-MM-DD"T"HH24:MI:SS.FF3"Z"'));
+|||2025-02-01T16:00:00.105Z [INFO ] [OracleDB] [TRACE_U555666_000123_888_1580563200] Transaction recorded successfully.
+|||2025-02-01T16:00:00.110Z [DEBUG] [TellerApplication] [TRACE_U333444_000123_777_1580563200] Preparing user notification request.
+|||2025-02-01T16:00:00.115Z [DEBUG] [TellerApplication] [TRACE_U333444_000123_777_1580563200] REST Request:
+POST /notification/send
+{
+   "recipient": "+1234567890",
+   "message": "Transfer of $500 from account 789456123 to 654123987 completed successfully. TXN ID: TXN123450.",
+   "type": "SMS"
+}
+|||2025-02-01T16:00:00.120Z [INFO ] [NotificationService] [TRACE_U333444_000123_777_1580563200] Sending SMS notification.
+|||2025-02-01T16:00:00.125Z [INFO ] [NotificationService] [TRACE_U333444_000123_777_1580563200] Notification sent successfully.
+|||2025-02-01T16:00:00.130Z [DEBUG] [TellerApplication] [TRACE_K111222_000123_800_1580563200] Initiating audit log entry.
+|||2025-02-01T16:00:00.135Z [DEBUG] [LoggingService] [TRACE_K111222_000123_800_1580563200] Executing log entry:
+{
+   "transactionId": "TXN123450",
+   "fromAccount": "789456123",
+   "toAccount": "654123987",
+   "amount": 500,
+   "status": "COMPLETED",
+   "timestamp": "2025-02-01T16:00:00.135Z",
+   "responseTime": "4 ms"
+}
+|||2025-02-01T16:00:00.140Z [INFO ] [LoggingService] [TRACE_K111222_000123_800_1580563200] Audit log entry recorded successfully.
+|||2025-02-01T16:00:00.145Z [INFO ] [TellerApplication] [TRACE_K999000_000123_900_1580563200] Cleaning up session data.
+|||2025-02-01T16:00:00.150Z [DEBUG] [TellerApplication] [TRACE_K999000_000123_900_1580563200] Session cleanup successful.
+|||2025-02-01T16:00:00.155Z [DEBUG] [UI] [TRACE_K981234_000123_488_1580563200] Displaying success message to user.
+|||2025-02-01T16:00:00.160Z [INFO ] [UI] [TRACE_K981234_000123_488_1580563200] User acknowledged transaction completion.
+|||2025-02-01T16:05:00.060Z [DEBUG] [TellerApplication] [TRACE_U888999_000123_200_1580563500] Preparing credit request.
+|||2025-02-01T16:05:00.065Z [DEBUG] [TellerApplication] [TRACE_U888999_000123_200_1580563500] REST Request:
+POST /AccountProcessSystem/corebanking/credit
+{
+   "accountNumber": "854621973",
+   "amount": 1200,
+   "transactionId": "TXN456789",
+   "transactionType": "CREDIT",
+   "responseTime": "2 ms"
+}
+|||2025-02-01T16:05:00.070Z [INFO ] [AccountProcessSystem] [TRACE_U888999_000123_200_1580563500] Processing credit request.
+|||2025-02-01T16:05:00.075Z [DEBUG] [AccountProcessSystem] [TRACE_U888999_000123_200_1580563500] Validating recipient account.
+|||2025-02-01T16:05:00.080Z [INFO ] [AccountProcessSystem] [TRACE_U888999_000123_200_1580563500] Credit successful. New balance: $6200.
+|||2025-02-01T16:05:00.085Z [DEBUG] [AccountProcessSystem] [TRACE_U888999_000123_200_1580563500] REST Response:
+{
+   "status": "SUCCESS",
+   "transactionId": "TXN456789",
+   "message": "Credit successful",
+   "responseTime": "3 ms"
+}
+|||2025-02-01T16:05:00.090Z [INFO ] [TellerApplication] [TRACE_U888999_000123_200_1580563500] Credit transaction confirmed.
+|||2025-02-01T16:05:00.095Z [DEBUG] [TellerApplication] [TRACE_U555111_000123_888_1580563500] Logging transaction to database.
+|||2025-02-01T16:05:00.100Z [DEBUG] [OracleDB] [TRACE_U555111_000123_888_1580563500] Executing query:
+INSERT INTO TRANSACTION_HISTORY (TRANSACTION_ID, FROM_ACCOUNT, TO_ACCOUNT, AMOUNT, STATUS, TIMESTAMP)
+VALUES ('TXN456789', '951357246', '854621973', 1200, 'COMPLETED', TO_TIMESTAMP('2025-02-01T16:05:00.100Z', 'YYYY-MM-DD"T"HH24:MI:SS.FF3"Z"'));
+|||2025-02-01T16:05:00.105Z [INFO ] [OracleDB] [TRACE_U555111_000123_888_1580563500] Transaction recorded successfully.
+|||2025-02-01T16:05:00.110Z [DEBUG] [TellerApplication] [TRACE_U333444_000123_777_1580563500] Preparing user notification request.
+|||2025-02-01T16:05:00.115Z [DEBUG] [TellerApplication] [TRACE_U333444_000123_777_1580563500] REST Request:
+POST /notification/send
+{
+   "recipient": "+9876543210",
+   "message": "Transfer of $1200 from account 951357246 to 854621973 completed successfully. TXN ID: TXN456789.",
+   "type": "SMS"
+}
+|||2025-02-01T16:05:00.120Z [INFO ] [NotificationService] [TRACE_U333444_000123_777_1580563500] Sending SMS notification.
+|||2025-02-01T16:05:00.125Z [INFO ] [NotificationService] [TRACE_U333444_000123_777_1580563500] Notification sent successfully.
+|||2025-02-01T16:05:00.165Z [INFO ] [TellerApplication] [TRACE_K999888_000123_999_1580563500] Finalizing transaction and closing resources.
+|||2025-02-01T16:05:00.170Z [DEBUG] [TellerApplication] [TRACE_K999888_000123_999_1580563500] Closing database connections.
+|||2025-02-01T16:05:00.175Z [INFO ] [DatabaseConnectionPool] [TRACE_K999888_000123_999_1580563500] All database connections closed successfully.
+|||2025-02-01T16:05:00.180Z [DEBUG] [TellerApplication] [TRACE_K999888_000123_999_1580563500] Closing external API connections.
+|||2025-02-01T16:05:00.185Z [INFO ] [APIClient] [TRACE_K999888_000123_999_1580563500] All external API connections closed successfully.
+|||2025-02-01T16:05:00.190Z [INFO ] [TellerApplication] [TRACE_K999888_000123_999_1580563500] All pending sessions cleared.
+|||2025-02-01T16:05:00.195Z [INFO ] [UI] [TRACE_672384_000123_488_1580563500] User session cleared and terminated.
+|||2025-02-01T16:05:00.200Z [INFO ] [TellerApplication] [TRACE_K999888_000123_999_1580563500] Application shutdown initiated.
+|||2025-02-01T16:05:00.205Z [DEBUG] [TellerApplication] [TRACE_K999888_000123_999_1580563500] Closing application context.
+|||2025-02-01T16:05:00.210Z [INFO ] [TellerApplication] [TRACE_K999888_000123_999_1580563500] Application context closed successfully.
+|||2025-02-01T16:05:00.215Z [INFO ] [TellerApplication] [TRACE_K999888_000123_999_1580563500] Application shutdown completed. All resources have been released.

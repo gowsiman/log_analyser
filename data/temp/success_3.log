@@ -1,0 +1,172 @@
+2025-02-01T17:00:00.123Z [INFO ] [UI] [TRACE987654] User initiated cash deposit request. Amount: $500, Account: 123457890.
+2025-02-01T17:00:00.125Z [DEBUG] [UI] [TRACE987654] Validating user input. Account: 123457890, Amount: $500.
+2025-02-01T17:00:00.130Z [INFO ] [UI] [TRACE987654] User input validated successfully.
+2025-02-01T17:00:00.135Z [INFO ] [SpringBoot] [TRACE987654] Received cash deposit request from UI. Amount: $500, Account: 123457890.
+2025-02-01T17:00:00.140Z [DEBUG] [SpringBoot] [TRACE987654] Retrieving customer information for Account: 123457890.
+2025-02-01T17:00:00.145Z [INFO ] [SpringBoot] [TRACE987654] Querying customer info from database.
+2025-02-01T17:00:00.150Z [DEBUG] [OracleDB] [TRACE987654] Executing query:
+SELECT * FROM CUSTOMER WHERE ACCOUNT_NUMBER = '123457890';
+2025-02-01T17:00:00.155Z [INFO ] [OracleDB] [TRACE987654] Customer info retrieved successfully.
+2025-02-01T17:00:00.160Z [INFO ] [SpringBoot] [TRACE987654] Customer info retrieved: Name: John Doe, Balance: $2000.
+2025-02-01T17:00:00.165Z [DEBUG] [SpringBoot] [TRACE987654] Proceeding with cash deposit transaction.
+2025-02-01T17:00:00.170Z [INFO ] [SpringBoot] [TRACE987654] Generating transaction record for deposit. Transaction ID: TXN987654.
+2025-02-01T17:00:00.175Z [INFO ] [OracleDB] [TRACE987654] Inserting transaction record into database.
+2025-02-01T17:00:00.180Z [DEBUG] [OracleDB] [TRACE987654] Executing query:
+INSERT INTO TRANSACTION_HISTORY (TRANSACTION_ID, ACCOUNT_NUMBER, AMOUNT, TYPE, TIMESTAMP)
+VALUES ('TXN987654', '123457890', 500, 'DEPOSIT', TO_DATE('2025-02-01 17:00:00', 'YYYY-MM-DD HH24:MI:SS'));
+2025-02-01T17:00:00.185Z [INFO ] [OracleDB] [TRACE987654] Transaction record inserted successfully. Transaction ID: TXN987654.
+2025-02-01T17:00:00.190Z [INFO ] [SpringBoot] [TRACE987654] Cash deposit transaction completed successfully. Transaction ID: TXN987654.
+2025-02-01T17:00:00.195Z [DEBUG] [UI] [TRACE987654] Displaying transaction success message to user: "Deposit of $500 was successful. Your new balance is $2500."
+2025-02-01T17:00:00.200Z [INFO ] [UI] [TRACE987654] User transaction completed successfully.
+
+2025-02-01T17:01:00.210Z [INFO ] [UI] [TRACE112233] User initiated cash withdrawal request. Amount: $200, Account: 987654321.
+2025-02-01T17:01:00.215Z [DEBUG] [UI] [TRACE112233] Validating user input. Account: 987654321, Amount: $200.
+2025-02-01T17:01:00.220Z [INFO ] [UI] [TRACE112233] User input validated successfully.
+2025-02-01T17:01:00.225Z [INFO ] [SpringBoot] [TRACE112233] Received cash withdrawal request from UI. Amount: $200, Account: 987654321.
+2025-02-01T17:01:00.230Z [DEBUG] [SpringBoot] [TRACE112233] Retrieving customer information for Account: 987654321.
+2025-02-01T17:01:00.235Z [INFO ] [SpringBoot] [TRACE112233] Querying customer info from database.
+2025-02-01T17:01:00.240Z [DEBUG] [OracleDB] [TRACE112233] Executing query:
+SELECT * FROM CUSTOMER WHERE ACCOUNT_NUMBER = '987654321';
+2025-02-01T17:01:00.245Z [INFO ] [OracleDB] [TRACE112233] Customer info retrieved successfully.
+2025-02-01T17:01:00.250Z [INFO ] [SpringBoot] [TRACE112233] Customer info retrieved: Name: Jane Smith, Balance: $1500.
+2025-02-01T17:01:00.255Z [DEBUG] [SpringBoot] [TRACE112233] Proceeding with cash withdrawal transaction.
+2025-02-01T17:01:00.260Z [INFO ] [SpringBoot] [TRACE112233] Generating transaction record for withdrawal. Transaction ID: TXN112233.
+2025-02-01T17:01:00.265Z [INFO ] [OracleDB] [TRACE112233] Inserting transaction record into database.
+2025-02-01T17:01:00.270Z [DEBUG] [OracleDB] [TRACE112233] Executing query:
+INSERT INTO TRANSACTION_HISTORY (TRANSACTION_ID, ACCOUNT_NUMBER, AMOUNT, TYPE, TIMESTAMP)
+VALUES ('TXN112233', '987654321', 200, 'WITHDRAWAL', TO_DATE('2025-02-01 17:01:00', 'YYYY-MM-DD HH24:MI:SS'));
+2025-02-01T17:01:00.275Z [INFO ] [OracleDB] [TRACE112233] Transaction record inserted successfully. Transaction ID: TXN112233.
+2025-02-01T17:01:00.280Z [INFO ] [SpringBoot] [TRACE112233] Cash withdrawal transaction completed successfully. Transaction ID: TXN112233.
+2025-02-01T17:01:00.285Z [DEBUG] [UI] [TRACE112233] Displaying transaction success message to user: "Withdrawal of $200 was successful. Your new balance is $1300."
+2025-02-01T17:01:00.290Z [INFO ] [UI] [TRACE112233] User transaction completed successfully.
+
+2025-02-01T17:02:00.300Z [INFO ] [UI] [TRACE223344] User initiated balance check. Account: 123457890.
+2025-02-01T17:02:00.305Z [DEBUG] [UI] [TRACE223344] Validating user input. Account: 123457890.
+2025-02-01T17:02:00.310Z [INFO ] [UI] [TRACE223344] User input validated successfully.
+2025-02-01T17:02:00.315Z [INFO ] [SpringBoot] [TRACE223344] Received balance check request from UI. Account: 123457890.
+2025-02-01T17:02:00.320Z [DEBUG] [SpringBoot] [TRACE223344] Retrieving customer information for Account: 123457890.
+2025-02-01T17:02:00.325Z [INFO ] [SpringBoot] [TRACE223344] Querying customer info from database.
+2025-02-01T17:02:00.330Z [DEBUG] [OracleDB] [TRACE223344] Executing query:
+SELECT * FROM CUSTOMER WHERE ACCOUNT_NUMBER = '123457890';
+2025-02-01T17:02:00.335Z [INFO ] [OracleDB] [TRACE223344] Customer info retrieved successfully.
+2025-02-01T17:02:00.340Z [INFO ] [SpringBoot] [TRACE223344] Customer info retrieved: Name: John Doe, Balance: $2500.
+2025-02-01T17:02:00.345Z [INFO ] [UI] [TRACE223344] Displaying account balance to user: "Your balance is $2500."
+2025-02-01T17:02:00.350Z [INFO ] [UI] [TRACE223344] User balance check completed successfully.
+
+2025-02-01T17:03:00.360Z [INFO ] [UI] [TRACE334455] User initiated cash deposit request. Amount: $1000, Account: 987654321.
+2025-02-01T17:03:00.365Z [DEBUG] [UI] [TRACE334455] Validating user input. Account: 987654321, Amount: $1000.
+2025-02-01T17:03:00.370Z [INFO ] [UI] [TRACE334455] User input validated successfully.
+2025-02-01T17:03:00.375Z [INFO ] [SpringBoot] [TRACE334455] Received cash deposit request from UI. Amount: $1000, Account: 987654321.
+2025-02-01T17:03:00.380Z [DEBUG] [SpringBoot] [TRACE334455] Retrieving customer information for Account: 987654321.
+2025-02-01T17:03:00.385Z [INFO ] [SpringBoot] [TRACE334455] Querying customer info from database.
+2025-02-01T17:03:00.390Z [DEBUG] [OracleDB] [TRACE334455] Executing query:
+SELECT * FROM CUSTOMER WHERE ACCOUNT_NUMBER = '987654321';
+2025-02-01T17:03:00.395Z [INFO ] [OracleDB] [TRACE334455] Customer info retrieved successfully.
+2025-02-01T17:03:00.400Z [INFO ] [SpringBoot] [TRACE334455] Customer info retrieved: Name: Jane Smith, Balance: $1300.
+2025-02-01T17:03:00.405Z [DEBUG] [SpringBoot] [TRACE334455] Proceeding with cash deposit transaction.
+2025-02-01T17:03:00.410Z [INFO ] [SpringBoot] [TRACE334455] Generating transaction record for deposit. Transaction ID: TXN334455.
+2025-02-01T17:03:00.415Z [INFO ] [OracleDB] [TRACE334455] Inserting transaction record into database.
+2025-02-01T17:03:00.420Z [DEBUG] [OracleDB] [TRACE334455] Executing query:
+INSERT INTO TRANSACTION_HISTORY (TRANSACTION_ID, ACCOUNT_NUMBER, AMOUNT, TYPE, TIMESTAMP)
+VALUES ('TXN334455', '987654321', 1000, 'DEPOSIT', TO_DATE('2025-02-01 17:03:00', 'YYYY-MM-DD HH24:MI:SS'));
+2025-02-01T17:03:00.425Z [INFO ] [OracleDB] [TRACE334455] Transaction record inserted successfully. Transaction ID: TXN334455.
+2025-02-01T17:03:00.430Z [INFO ] [SpringBoot] [TRACE334455] Cash deposit transaction completed successfully. Transaction ID: TXN334455.
+2025-02-01T17:03:00.435Z [DEBUG] [UI] [TRACE334455] Displaying transaction success message to user: "Deposit of $1000 was successful. Your new balance is $2300."
+2025-02-01T17:03:00.440Z [INFO ] [UI] [TRACE334455] User transaction completed successfully.
+
+2025-02-01T18:40:00.000Z [INFO ] [UI] [TRACE112233] User initiated checkout request. Cart ID: 555667, User ID: 987654, Total Amount: $1250.99.
+2025-02-01T18:40:00.005Z [DEBUG] [UI] [TRACE112233] Validating cart items for availability and price correctness.
+2025-02-01T18:40:00.010Z [INFO ] [UI] [TRACE112233] Cart validation successful. Proceeding to payment.
+2025-02-01T18:40:00.015Z [DEBUG] [UI] [TRACE112233] User confirmed checkout details. Calling the backend to process the order.
+2025-02-01T18:40:00.020Z [INFO ] [Middleware] [TRACE112233] Received checkout request. Forwarding to REST API for order processing.
+2025-02-01T18:40:00.025Z [INFO ] [API Gateway] [TRACE112233] Forwarding request to /order/checkout for processing.
+2025-02-01T18:40:00.030Z [DEBUG] [SpringBoot] [TRACE112233] Received REST API call for order checkout. Order ID: 789012, User ID: 987654, Amount: $1250.99.
+2025-02-01T18:40:00.035Z [INFO ] [SpringBoot] [TRACE112233] Retrieving user details from database for payment processing.
+2025-02-01T18:40:00.040Z [INFO ] [OracleDB] [TRACE112233] Executing query:
+SELECT * FROM USERS WHERE USER_ID = '987654';
+2025-02-01T18:40:00.045Z [INFO ] [OracleDB] [TRACE112233] User details retrieved. Name: John Doe, Payment Method: Credit Card.
+2025-02-01T18:40:00.050Z [INFO ] [SpringBoot] [TRACE112233] User details retrieved. Proceeding with payment processing.
+2025-02-01T18:40:00.055Z [DEBUG] [SpringBoot] [TRACE112233] Checking available credit limit for user’s credit card.
+2025-02-01T18:40:00.060Z [INFO ] [Middleware] [TRACE112233] Forwarding payment authorization request to external payment gateway API.
+2025-02-01T18:40:00.065Z [INFO ] [API Gateway] [TRACE112233] Calling external payment service API at /payment/authorize for transaction amount $1250.99.
+2025-02-01T18:40:00.070Z [INFO ] [PaymentGateway] [TRACE112233] Payment authorization request received. Amount: $1250.99, Credit Card: 1234-****-****-5678.
+2025-02-01T18:40:00.075Z [INFO ] [PaymentGateway] [TRACE112233] Authorization successful. Charging credit card for amount: $1250.99.
+2025-02-01T18:40:00.080Z [INFO ] [PaymentGateway] [TRACE112233] Payment processed successfully. Transaction ID: TXN123456.
+2025-02-01T18:40:00.085Z [INFO ] [API Gateway] [TRACE112233] Payment successful. Forwarding confirmation to backend.
+2025-02-01T18:40:00.090Z [DEBUG] [SpringBoot] [TRACE112233] Updating order status to "Paid" in the database.
+2025-02-01T18:40:00.095Z [INFO ] [OracleDB] [TRACE112233] Executing query:
+UPDATE ORDERS SET STATUS = 'PAID' WHERE ORDER_ID = '789012';
+2025-02-01T18:40:00.100Z [INFO ] [OracleDB] [TRACE112233] Order status updated successfully. Proceeding to inventory management.
+2025-02-01T18:40:00.105Z [INFO ] [SpringBoot] [TRACE112233] Updating inventory for items in the cart.
+2025-02-01T18:40:00.110Z [INFO ] [OracleDB] [TRACE112233] Executing query:
+UPDATE INVENTORY SET STOCK_QUANTITY = STOCK_QUANTITY - 1 WHERE PRODUCT_ID IN (SELECT PRODUCT_ID FROM CART_ITEMS WHERE CART_ID = '555667');
+2025-02-01T18:40:00.115Z [INFO ] [OracleDB] [TRACE112233] Inventory updated successfully. Preparing shipment.
+2025-02-01T18:40:00.120Z [DEBUG] [SpringBoot] [TRACE112233] Creating shipment record for order ID: 789012.
+2025-02-01T18:40:00.125Z [INFO ] [OracleDB] [TRACE112233] Executing query:
+INSERT INTO SHIPMENTS (ORDER_ID, SHIPMENT_STATUS, SHIPPING_ADDRESS)
+VALUES ('789012', 'PENDING', '123 Elm St, Springfield, IL');
+2025-02-01T18:40:00.130Z [INFO ] [OracleDB] [TRACE112233] Shipment record created. Preparing delivery.
+2025-02-01T18:40:00.135Z [INFO ] [SpringBoot] [TRACE112233] Updating order history.
+2025-02-01T18:40:00.140Z [INFO ] [OracleDB] [TRACE112233] Executing query:
+INSERT INTO ORDER_HISTORY (ORDER_ID, STATUS, TIMESTAMP)
+VALUES ('789012', 'PAID', TO_DATE('2025-02-01 18:40:00', 'YYYY-MM-DD HH24:MI:SS'));
+2025-02-01T18:40:00.145Z [INFO ] [OracleDB] [TRACE112233] Order history updated successfully.
+2025-02-01T18:40:00.150Z [DEBUG] [UI] [TRACE112233] Displaying order confirmation to user.
+2025-02-01T18:40:00.155Z [INFO ] [UI] [TRACE112233] Order successfully processed. Confirmation: Order ID 789012, Total: $1250.99.
+2025-02-01T18:40:00.160Z [INFO ] [UI] [TRACE112233] User confirmed order completion.
+
+2025-02-01T18:42:00.165Z [INFO ] [UI] [TRACE223344] User initiated checkout request. Cart ID: 666777, User ID: 112233, Total Amount: $500.75.
+2025-02-01T18:42:00.170Z [DEBUG] [UI] [TRACE223344] Validating cart items for availability and price correctness.
+2025-02-01T18:42:00.175Z [INFO ] [UI] [TRACE223344] Cart validation successful. Proceeding to payment.
+2025-02-01T18:42:00.180Z [DEBUG] [UI] [TRACE223344] User confirmed checkout details. Calling the backend to process the order.
+2025-02-01T18:42:00.185Z [INFO ] [Middleware] [TRACE223344] Received checkout request. Forwarding to REST API for order processing.
+2025-02-01T18:42:00.190Z [INFO ] [API Gateway] [TRACE223344] Forwarding request to /order/checkout for processing.
+2025-02-01T18:42:00.195Z [INFO ] [SpringBoot] [TRACE223344] Received REST API call for order checkout. Order ID: 987654, User ID: 112233, Amount: $500.75.
+2025-02-01T18:42:00.200Z [INFO ] [SpringBoot] [TRACE223344] Retrieving user details from database for payment processing.
+2025-02-01T18:42:00.205Z [INFO ] [OracleDB] [TRACE223344] Executing query:
+SELECT * FROM USERS WHERE USER_ID = '112233';
+2025-02-01T18:42:00.210Z [INFO ] [OracleDB] [TRACE223344] User details retrieved. Name: Jane Smith, Payment Method: PayPal.
+2025-02-01T18:42:00.215Z [INFO ] [SpringBoot] [TRACE223344] User details retrieved. Proceeding with payment processing.
+2025-02-01T18:42:00.220Z [DEBUG] [SpringBoot] [TRACE223344] Checking PayPal balance for user’s PayPal account.
+2025-02-01T18:42:00.225Z [INFO ] [Middleware] [TRACE223344] Forwarding payment authorization request to external PayPal API.
+2025-02-01T18:42:00.230Z [INFO ] [API Gateway] [TRACE223344] Calling external PayPal service API at /payment/paypal/authorize for transaction amount $500.75.
+2025-02-01T18:42:00.235Z [INFO ] [PayPalAPI] [TRACE223344] PayPal payment authorization request received. Amount: $500.75, PayPal ID: smith_jane@paypal.com.
+2025-02-01T18:42:00.240Z [INFO ] [PayPalAPI] [TRACE223344] Authorization successful. Charging PayPal account for amount: $500.75.
+2025-02-01T18:42:00.245Z [INFO ] [PayPalAPI] [TRACE223344] Payment processed successfully. Transaction ID: PAYTXN987654.
+2025-02-01T18:42:00.250Z [INFO ] [API Gateway] [TRACE223344] Payment successful. Forwarding confirmation to backend.
+2025-02-01T18:42:00.255Z [DEBUG] [SpringBoot] [TRACE223344] Updating order status to "Paid" in the database.
+2025-02-01T18:42:00.260Z [INFO ] [OracleDB] [TRACE223344] Executing query:
+UPDATE ORDERS SET STATUS = 'PAID' WHERE ORDER_ID = '987654';
+2025-02-01T18:42:00.265Z [INFO ] [OracleDB] [TRACE223344] Order status updated successfully. Proceeding to inventory management.
+2025-02-01T18:42:00.270Z [INFO ] [SpringBoot] [TRACE223344] Updating inventory for items in the cart.
+2025-02-01T18:42:00.275Z [INFO ] [OracleDB] [TRACE223344] Executing query:
+UPDATE INVENTORY SET STOCK_QUANTITY = STOCK_QUANTITY - 1 WHERE PRODUCT_ID IN (SELECT PRODUCT_ID FROM CART_ITEMS WHERE CART_ID = '666777');
+2025-02-01T18:42:00.280Z [INFO ] [OracleDB] [TRACE223344] Inventory updated successfully. Preparing shipment.
+2025-02-01T18:42:00.285Z [INFO ] [SpringBoot] [TRACE223344] Creating shipment record for order ID: 987654.
+2025-02-01T18:42:00.290Z [INFO ] [OracleDB] [TRACE223344] Executing query:
+INSERT INTO SHIPMENTS (ORDER_ID, SHIPMENT_STATUS, SHIPPING_ADDRESS)
+VALUES ('987654', 'PENDING', '456 Oak St, Springfield, IL');
+2025-02-01T18:42:00.295Z [INFO ] [OracleDB] [TRACE223344] Shipment record created. Preparing delivery.
+2025-02-01T18:42:00.300Z [INFO ] [SpringBoot] [TRACE223344] Updating order history.
+2025-02-01T18:42:00.305Z [INFO ] [OracleDB] [TRACE223344] Executing query:
+INSERT INTO ORDER_HISTORY (ORDER_ID, STATUS, TIMESTAMP)
+VALUES ('987654', 'PAID', TO_DATE('2025-02-01 18:42:00', 'YYYY-MM-DD HH24:MI:SS'));
+2025-02-01T18:42:00.310Z [INFO ] [OracleDB] [TRACE223344] Order history updated successfully.
+2025-02-01T18:42:00.315Z [DEBUG] [UI] [TRACE223344] Displaying order confirmation to user.
+2025-02-01T18:42:00.320Z [INFO ] [UI] [TRACE223344] Order successfully processed. Confirmation: Order ID 987654, Total: $500.75.
+2025-02-01T18:42:00.325Z [INFO ] [UI] [TRACE223344] User confirmed order completion.
+
+2025-02-01T18:42:00.330Z [INFO ] [SpringBoot] [TRACE223344] Application shutdown initiated. Closing open connections and resources.
+2025-02-01T18:42:00.335Z [INFO ] [OracleDB] [TRACE223344] Closing database connections and releasing resources.
+2025-02-01T18:42:00.340Z [INFO ] [API Gateway] [TRACE223344] Shutting down API Gateway connections and releasing resources.
+2025-02-01T18:42:00.345Z [INFO ] [Middleware] [TRACE223344] Closing all active sessions and terminating middleware services.
+2025-02-01T18:42:00.350Z [INFO ] [UI] [TRACE223344] User interface session terminated. Logging out user and clearing session data.
+2025-02-01T18:42:00.355Z [INFO ] [PaymentGateway] [TRACE223344] Shutting down payment service connections.
+2025-02-01T18:42:00.360Z [INFO ] [SpringBoot] [TRACE223344] All services gracefully shut down. Exiting application.
+2025-02-01T18:42:00.365Z [INFO ] [System] [TRACE223344] Application shutdown complete. All processes have terminated successfully.
+   ut user and clearing session data.
+2025-02-01T18:42:00.355Z [INFO ] [PaymentGateway] [TRACE223344] Shutting down payment service connections.
+2025-02-01T18:42:00.360Z [INFO ] [SpringBoot] [TRACE223344] All services gracefully shut down. Exiting application.
+2025-02-01T18:42:00.365Z [INFO ] [System] [TRACE223344] Application shutdown complete. All processes have terminated successfully.
+   lly.
+   

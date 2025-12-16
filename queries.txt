@@ -1,0 +1,8 @@
+Show me the error hotspots in the logs for the selected time window
+Assess failure transactions and provide impacted customers information
+Determine anomalies observed
+Historical occurrence of payment failures in the last month
+List me the exceptions noticed and its counts
+Share the sequence of flow for a withdrawal transaction
+Transaction latency and response time analysis
+List the REST or SOAP URL endpoints application is communicating to

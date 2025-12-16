@@ -1,0 +1,483 @@
+/* Modern Color Scheme */
+:root {
+    --primary-red: #D32F2F;
+    --accent-orange: #F57C00;
+    --highlight-yellow: #FFD54F;
+    --dark-bg: #212121;
+    --light-bg: #F5F5F5;
+}
+
+/* Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+body {
+    background: var(--light-bg);
+    color: var(--dark-bg);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 2rem;
+    transform: scale(0.8);
+    transform-origin: top center;
+}
+
+/* Header Styles */
+.main-header {
+    background: linear-gradient(135deg, var(--primary-red), var(--accent-orange));
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+
+.header-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    flex-direction: column;
+    padding-bottom: 0;
+}
+
+.branding h1 {
+    font-size: 45px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+}
+
+.branding p {
+    font-size: 30px;
+    opacity: 0.9;
+}
+
+/* Main Layout */
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: -20px;
+    padding-top: 20px;
+}
+
+/* Configuration Panel */
+.config-panel {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+    justify-content: space-between;
+}
+
+.form-container {
+    width: 48%;
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+h2 {
+    margin-bottom: 1rem;
+}
+
+/* Form Group */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--dark-bg);
+    font-size: 0.9rem;
+}
+
+.input-field {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.input-field:focus {
+    border-color: var(--accent-orange);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(245, 124, 0, 0.1);
+}
+
+.time-range-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+/* Results Section */
+.analysis-panel {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    flex-direction: column;
+    margin-top: 2rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+}
+
+.results-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.tab-button {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    background: #DDDDDD;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Hover Effect */
+.tab-button:hover {
+    background: #a7a2a2;  /* Slightly darker gray */
+}
+
+.tab-button.active {
+    background: var(--primary-red);
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.log-display {
+    flex-grow: 1;
+    background: var(--light-bg);
+    border-radius: 8px;
+    padding: 1.5rem;
+    font-family: 'Consolas', monospace;
+    font-size: 0.85rem;
+    overflow: auto;
+    max-height: 600px;
+}
+
+.ai-analysis {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background: rgba(255, 213, 79, 0.1);
+    border-radius: 8px;
+    border-left: 4px solid var(--highlight-yellow);
+}
+
+/* Action Buttons */
+.action-buttons {
+    bottom: 0.5rem;
+    right: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    align-self: flex-end; 
+}
+
+.btn-primary {
+    background: var(--primary-red);
+    color: white;
+    padding: 0.7rem 1rem; /* Reduce button size */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.2s ease;
+    font-size: 0.85rem; /* Adjust text size */
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .config-panel {
+        flex-direction: column;
+    }
+
+    .form-container {
+        width: 100%;
+    }
+
+    .action-buttons {
+        align-self: center; /* Center buttons on smaller screens */
+        margin-top: 1rem;
+    }
+}
+
+/* CSS FOR THE SPINNER */
+.spinner {
+  position: absolute;
+  top: 72%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 150px;
+  color: var(--accent-orange);
+  z-index: 1000;
+}
+
+/* Accordion Styles */
+.accordion {
+    background: var(--light-bg);
+    margin: 1rem 0;
+    border-radius: 8px;
+    border: 2px solid #e0e0e0;
+}
+
+.accordion-header {
+    padding: 1rem;
+    background: var(--accent-orange);
+    color: white;
+    text-align: left;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+}
+
+.accordion-header:hover {
+    background: var(--highlight-yellow);
+}
+
+.accordion-content {
+    padding: 1rem;
+    display: none;
+    background: var(--light-bg);
+    font-size: 0.9rem;
+    border-top: 1px solid #e0e0e0;
+    border-radius: 0 0 8px 8px;
+}
+
+.accordion-content.active {
+    display: block;
+}
+
+.accordion-header:after {
+    content: ' ▼';  /* Default arrow pointing down */
+}
+
+.accordion-header.active:after {
+    content: ' ▲';  /* Arrow pointing up when expanded */
+}
+
+
+.ai-analysis-tabs {
+    display: flex;
+    gap: 0.5rem; /* Reduces space between buttons */
+    justify-content: flex-start; /* Aligns buttons to the left */
+    flex-wrap: wrap; /* Ensures responsiveness */
+}
+
+/* .tab-button {
+    flex: 1;
+    padding: 10px;
+    background: var(--light-bg);
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-align: center;
+    border-radius: 5px;
+} */
+
+.tab-button.active {
+    background: var(--primary-red);
+    color: white;
+}
+
+/* AI Analysis Sections */
+.ai-analysis-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1rem;
+    position: relative;
+    font-size: 1rem;
+}
+
+.sub-section {
+    display: none;
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    flex: 1;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Show active section */
+.sub-section.active {
+    display: block;
+}
+
+.ai-analysis-container{
+    padding-top: 0;
+    margin-top: -80px;
+}
+
+#suggestions-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+    background-color: var(--light-bg); /* Light background for the suggestion container */
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.nav-button {
+    background-color: var(--accent-orange); /* Accent color for navigation buttons */
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+.nav-button:hover {
+    background-color: var(--primary-red); /* Primary color on hover */
+}
+
+#suggestion-bubble {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    animation: bubble-appear 0.3s ease-out; /* Bubble appearance animation */
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#suggestion-text {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--dark-bg); /* Dark text color for readability */
+    text-align: center;
+}
+
+#suggestion-counter {
+    font-size: 14px;
+    color: var(--dark-bg); /* Dark counter color for consistency */
+}
+
+@keyframes bubble-appear {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* General container styling */
+#form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f4f4f9;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    overflow: hidden;
+}
+
+/* Styling for the question list (bubbles) */
+#question-list {
+    display: flex; /* Change to flexbox for row-wise layout */
+    flex-direction: column; /* Stack items vertically */
+    gap: 15px; /* Space between items */
+    padding: 10px 20px; /* Padding for better spacing */
+    max-width: 800px; /* Limit width for better readability */
+    margin: 0 auto; /* Center the list */
+}
+
+.question-item {
+    padding: 15px 15px; /* Slightly larger padding for better readability */
+    color: white;
+    border-radius: 12px; /* Slightly rounded corners for a modern look */
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Softer shadow for depth */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+    animation: popIn 0.5s forwards;
+    background: linear-gradient(135deg, #D32F2F, #e12d2d); /* Gradient background */
+}
+
+/* Hover effect for question bubbles - smoother and more refined */
+.question-item:hover {
+    background: linear-gradient(135deg, #e12d2d, #a62525); /* Reverse gradient on hover */
+    transform: scale(1.02); /* Slightly smaller scale for a subtle effect */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+}
+
+/* Focus effect (optional) - more subtle and modern */
+.question-item:focus {
+    outline: none;
+    box-shadow: 0 0 12px rgba(211, 47, 47, 0.6); /* Softer red glow */
+}
+
+/* Animation for pop-in effect */
+@keyframes popIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Optional: Add a smooth fade-in effect for the entire form */
+#QuestionForm {
+    animation: fadeIn 0.8s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+#QuestionForm h2{
+    margin-bottom: 0;
+    padding-bottom: 0;
+    text-align: center;
+    margin-top: -10px;
+}

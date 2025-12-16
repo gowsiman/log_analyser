@@ -1,0 +1,84 @@
+2025-02-01T16:30:00.123Z [INFO ] [UI] [TRACE_U98672_0012_100_1706807400] User initiated cash withdrawal request. Amount: $300, Account: 123456789.
+|||2025-02-01T16:30:00.125Z [DEBUG] [UI] [TRACE_U98672_0012_100_1706807400] Sending withdrawal request to Spring Boot server.
+|||2025-02-01T16:30:00.130Z [INFO ] [TellerApplication] [TRACE_U98672_0012_100_1706807400] Received withdrawal request. Validating input.
+|||2025-02-01T16:30:00.135Z [DEBUG] [TellerApplication] [TRACE_U98672_0012_100_1706807400] Checking account status for 123456789.
+|||2025-02-01T16:30:00.140Z [INFO ] [TellerApplication] [TRACE_U98672_0012_100_1706807400] Account validation successful.
+|||2025-02-01T16:30:00.145Z [DEBUG] [TellerApplication] [TRACE_U98672_0012_100_1706807400] Preparing debit request for AccountProcessSystem.
+|||2025-02-01T16:30:00.150Z [DEBUG] [TellerApplication] [TRACE_U98672_0012_100_1706807400] REST Request:
+POST /AccountProcessSystem/corebanking/debit
+{
+   "accountNumber": "123456789",
+   "amount": 300,
+   "transactionType": "DEBIT",
+   "customerId": "23125",
+   "customerName": "Bob"
+}
+|||2025-02-01T16:30:00.155Z [INFO ] [AccountProcessSystem] [TRACE_U98672_0012_100_1706807400] Processing debit request for account 123456789.
+|||2025-02-01T16:30:00.160Z [DEBUG] [AccountProcessSystem] [TRACE_U98672_0012_100_1706807400] Checking account balance.
+|||2025-02-01T16:30:00.165Z [ERROR] [OracleDB] [TRACE_U98672_0012_100_1706807400] Failed to execute INSERT query: ORA-00001: unique constraint (TRANSACTION_HISTORY_PK) violated.
+|||2025-02-01T16:30:00.170Z [INFO ] [TellerApplication] [TRACE_U98672_0012_100_1706807400] Transaction aborted due to database constraint violation.
+|||2025-02-01T16:30:00.175Z [ERROR] [UI] [TRACE_U98672_0012_100_1706807400] Displaying error to user: "Withdrawal failed due to duplicate transaction record."
+|||2025-02-01T16:30:00.180Z [DEBUG] [TellerApplication] [TRACE_U98672_0012_100_1706807400] Rolling back transaction due to OracleDB error.
+|||2025-02-01T16:30:00.185Z [INFO ] [LoggingService] [TRACE_U98672_0012_100_1706807400] Audit log entry skipped due to transaction rollback.
+|||2025-02-01T16:30:00.190Z [DEBUG] [TellerApplication] [TRACE_U98672_0012_100_1706807400] REST Response:
+{
+   "status": "FAILED",
+   "message": "Duplicate transaction detected",
+   "responseTime": 2
+}
+
+|||2025-02-01T16:30:05.250Z [INFO ] [UI] [TRACE_U82319_0102_200_1706807405] User initiated cash withdrawal request. Amount: $500, Account: 987654321.
+|||2025-02-01T16:30:05.255Z [DEBUG] [UI] [TRACE_U82319_0102_200_1706807405] Sending withdrawal request to Spring Boot server.
+|||2025-02-01T16:30:05.260Z [INFO ] [TellerApplication] [TRACE_U82319_0102_200_1706807405] Received withdrawal request. Validating input.
+|||2025-02-01T16:30:05.265Z [DEBUG] [TellerApplication] [TRACE_U82319_0102_200_1706807405] Preparing REST request for AccountProcessSystem.
+|||2025-02-01T16:30:05.270Z [DEBUG] [TellerApplication] [TRACE_U82319_0102_200_1706807405] REST Request:
+POST /api/v1/getCustomerInfo
+{
+   "accountNumber": "987654321",
+   "customerId": "12879",
+   "customerName": "Gabriel"
+}
+|||2025-02-01T16:30:05.275Z [INFO ] [AccountProcessSystem] [TRACE_U82319_0102_200_1706807405] Received REST request. Processing...
+|||2025-02-01T16:30:05.280Z [DEBUG] [AccountProcessSystem] [TRACE_U82319_0102_200_1706807405] Error: Malformed JSON in incoming request.
+|||2025-02-01T16:30:05.285Z [ERROR] [AccountProcessSystem] [TRACE_U82319_0102_200_1706807405] Request processing failed due to invalid JSON format.
+|||2025-02-01T16:30:05.290Z [INFO ] [TellerApplication] [TRACE_U82319_0102_200_1706807405] Aborting transaction due to AccountProcessSystem error.
+|||2025-02-01T16:30:05.295Z [ERROR] [UI] [TRACE_U82319_0102_200_1706807405] User notified: "Withdrawal failed due to request format error."
+|||2025-02-01T16:30:05.300Z [DEBUG] [TellerApplication] [TRACE_U82319_0102_200_1706807405] REST Response:
+{
+   "status": "FAILED",
+   "message": "Invalid JSON format",
+   "responseTime": 3
+}
+
+|||2025-02-01T16:30:10.350Z [INFO ] [UI] [TRACE_K556677_020304_400_1706807410] User initiated cash withdrawal request. Amount: $800, Account: 112233445.
+|||2025-02-01T16:30:10.355Z [DEBUG] [UI] [TRACE_K556677_020304_400_1706807410] Sending withdrawal request to Spring Boot server.
+|||2025-02-01T16:30:10.360Z [INFO ] [TellerApplication] [TRACE_K556677_020304_400_1706807410] Received withdrawal request. Validating input.
+|||2025-02-01T16:30:10.365Z [DEBUG] [TellerApplication] [TRACE_K556677_020304_400_1706807410] Preparing REST request for AccountProcessSystem.
+|||2025-02-01T16:30:10.370Z [DEBUG] [TellerApplication] [TRACE_K556677_020304_400_1706807410] REST Request:
+POST /api/v1/getCustomerInfo
+{
+   "accountNumber": "112233445",
+   "customerId": "124235",
+   "customerName": "Jacob"
+}
+|||2025-02-01T16:30:10.375Z [INFO ] [AccountProcessSystem] [TRACE_K556677_020304_400_1706807410] Received REST request. Processing...
+|||2025-02-01T16:30:10.380Z [DEBUG] [AccountProcessSystem] [TRACE_K556677_020304_400_1706807410] Validating account information for Account: 112233445.
+|||2025-02-01T16:30:10.385Z [ERROR] [TellerApplication] [TRACE_K556677_020304_400_1706807410] Exception: NullPointerException in service layer while processing response.
+|||2025-02-01T16:30:10.390Z [INFO ] [TellerApplication] [TRACE_K556677_020304_400_1706807410] Transaction failed due to unexpected server error. Response time: 1 ms
+|||2025-02-01T16:30:10.395Z [ERROR] [UI] [TRACE_K556677_020304_400_1706807410] Displaying error to user: "Withdrawal failed due to internal server error."
+|||2025-02-01T16:30:10.400Z [DEBUG] [TellerApplication] [TRACE_K556677_020304_400_1706807410] Initiating rollback of transaction due to NullPointerException.
+
+|||2025-02-01T16:40:00.000Z [INFO ] [UI] [TRACE_U334455_030506_600_1706808000] User initiated payment request. Amount: $1000, Account: 555666777.
+|||2025-02-01T16:40:00.005Z [DEBUG] [TellerApplication] [TRACE_U334455_030506_600_1706808000] Initiating REST call to PaymentGateway at /payment/charge.
+|||2025-02-01T16:40:00.010Z [DEBUG] [TellerApplication] [TRACE_U334455_030506_600_1706808000] REST Request:
+POST /payment/charge
+{
+   "accountNumber": "555666777",
+   "amount": 1000,
+   "customerId": "90912",
+   "customerName": "Marie"
+}
+|||2025-02-01T16:40:00.015Z [ERROR] [PaymentGateway] [TRACE_U334455_030506_600_1706808000] REST API call failed: HTTP 500 Internal Server Error. Response time: 1 ms
+|||2025-02-01T16:40:00.020Z [INFO ] [TellerApplication] [TRACE_U334455_030506_600_1706808000] Payment request failed due to PaymentGateway error.
+|||2025-02-01T16:40:00.025Z [ERROR] [UI] [TRACE_U334455_030506_600_1706808000] Displaying error to user: "Payment failed due to server error. Please try again later."
+|||2025-02-01T16:40:00.030Z [DEBUG] [TellerApplication] [TRACE_U334455_030506_600_1706808000] Initiating rollback for payment transaction.

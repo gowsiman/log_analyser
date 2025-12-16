@@ -1,0 +1,210 @@
+2025-02-01T19:00:00.100Z [INFO ] [UI] [TRACE889876] User initiated withdrawal request. Amount: $400, Account: 678912345.
+2025-02-01T19:00:00.105Z [DEBUG] [UI] [TRACE889876] Sending withdrawal request to Spring Boot server.
+2025-02-01T19:00:00.110Z [INFO ] [SpringBoot] [TRACE889876] Received withdrawal request. Amount: $400, Account: 678912345.
+2025-02-01T19:00:00.115Z [DEBUG] [SpringBoot] [TRACE889876] Preparing SOAP request for Middleware CustInfo.
+2025-02-01T19:00:00.120Z [DEBUG] [SpringBoot] [TRACE889876] SOAP Request:
+<?xml version="1.0"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:mid="http://middleware.example.com/CustInfo">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <mid:GetCustomerInfoRequest>
+         <mid:AccountNumber>678912345</mid:AccountNumber>
+      </mid:GetCustomerInfoRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
+2025-02-01T19:00:00.125Z [INFO ] [Middleware] [TRACE889876] Received SOAP request. Processing...
+2025-02-01T19:00:00.130Z [DEBUG] [Middleware] [TRACE889876] Validating account information for Account: 678912345.
+2025-02-01T19:00:00.135Z [ERROR] [Middleware] [TRACE889876] Account validation failed for Account: 678912345. Invalid account number.
+2025-02-01T19:00:00.140Z [DEBUG] [UI] [TRACE889876] Displaying error message to user: "Unable to process the transaction. Invalid account number."
+2025-02-01T19:00:00.145Z [INFO ] [UI] [TRACE889876] User acknowledged error message.
+2025-02-01T19:01:00.100Z [INFO ] [UI] [TRACE887654] User initiated withdrawal request. Amount: $500, Account: 234567890.
+2025-02-01T19:01:00.105Z [DEBUG] [UI] [TRACE887654] Sending withdrawal request to Spring Boot server.
+2025-02-01T19:01:00.110Z [INFO ] [SpringBoot] [TRACE887654] Received withdrawal request. Amount: $500, Account: 234567890.
+2025-02-01T19:01:00.115Z [DEBUG] [SpringBoot] [TRACE887654] Preparing REST API request for Middleware CustInfo.
+2025-02-01T19:01:00.120Z [DEBUG] [SpringBoot] [TRACE887654] REST API Request:
+POST /api/getCustomerInfo HTTP/1.1
+Host: middleware.example.com
+Content-Type: application/json
+
+{
+   "AccountNumber": "234567890"
+}
+2025-02-01T19:01:00.125Z [INFO ] [Middleware] [TRACE887654] Received REST API request. Processing...
+2025-02-01T19:01:00.130Z [DEBUG] [Middleware] [TRACE887654] Validating account information for Account: 234567890.
+2025-02-01T19:01:00.135Z [INFO ] [Middleware] [TRACE887654] Account validated successfully. Preparing response.
+2025-02-01T19:01:00.140Z [DEBUG] [Middleware] [TRACE887654] REST API Response:
+HTTP/1.1 200 OK
+{
+   "Status": "Success",
+   "Message": "Account validated successfully."
+}
+2025-02-01T19:01:00.145Z [INFO ] [SpringBoot] [TRACE887654] Received successful response from Middleware. Proceeding with transaction.
+2025-02-01T19:01:00.150Z [DEBUG] [SpringBoot] [TRACE887654] Initiating Oracle DB insert query for transaction record.
+2025-02-01T19:01:00.155Z [DEBUG] [OracleDB] [TRACE887654] Executing query:
+INSERT INTO TRANSACTION_HISTORY (TRANSACTION_ID, ACCOUNT_NUMBER, AMOUNT, STATUS, TIMESTAMP)
+VALUES ('TXN234567', '234567890', 500, 'COMPLETED', TO_DATE('2025-02-01 19:01:00', 'YYYY-MM-DD HH24:MI:SS'));
+2025-02-01T19:01:00.160Z [INFO ] [OracleDB] [TRACE887654] Transaction record inserted successfully. Transaction ID: TXN234567.
+2025-02-01T19:01:00.165Z [INFO ] [SpringBoot] [TRACE887654] Withdrawal transaction completed successfully. Transaction ID: TXN234567.
+2025-02-01T19:01:00.170Z [DEBUG] [UI] [TRACE887654] Transaction completion notification sent to user.
+2025-02-01T19:01:00.175Z [INFO ] [UI] [TRACE887654] User confirmed withdrawal completion.
+2025-02-01T19:02:00.100Z [INFO ] [UI] [TRACE990876] User initiated withdrawal request. Amount: $800, Account: 112233445.
+2025-02-01T19:02:00.105Z [DEBUG] [UI] [TRACE990876] Sending withdrawal request to Spring Boot server.
+2025-02-01T19:02:00.110Z [INFO ] [SpringBoot] [TRACE990876] Received withdrawal request. Amount: $800, Account: 112233445.
+2025-02-01T19:02:00.115Z [DEBUG] [SpringBoot] [TRACE990876] Preparing SOAP request for Middleware CustInfo.
+2025-02-01T19:02:00.120Z [DEBUG] [SpringBoot] [TRACE990876] SOAP Request:
+<?xml version="1.0"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:mid="http://middleware.example.com/CustInfo">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <mid:GetCustomerInfoRequest>
+         <mid:AccountNumber>112233445</mid:AccountNumber>
+      </mid:GetCustomerInfoRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
+2025-02-01T19:02:00.125Z [INFO ] [Middleware] [TRACE990876] Received SOAP request. Processing...
+2025-02-01T19:02:00.130Z [DEBUG] [Middleware] [TRACE990876] Validating account information for Account: 112233445.
+2025-02-01T19:02:00.135Z [INFO ] [Middleware] [TRACE990876] Account validated successfully. Preparing response.
+2025-02-01T19:02:00.140Z [DEBUG] [Middleware] [TRACE990876] SOAP Response:
+<?xml version="1.0"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+   <soapenv:Body>
+      <GetCustomerInfoResponse>
+         <Status>Success</Status>
+         <Message>Account validated successfully.</Message>
+      </GetCustomerInfoResponse>
+   </soapenv:Body>
+</soapenv:Envelope>
+2025-02-01T19:02:00.145Z [INFO ] [SpringBoot] [TRACE990876] Received successful response from Middleware. Proceeding with transaction.
+2025-02-01T19:02:00.150Z [DEBUG] [SpringBoot] [TRACE990876] Initiating Oracle DB insert query for transaction record.
+2025-02-01T19:02:00.155Z [DEBUG] [OracleDB] [TRACE990876] Executing query:
+INSERT INTO TRANSACTION_HISTORY (TRANSACTION_ID, ACCOUNT_NUMBER, AMOUNT, STATUS, TIMESTAMP)
+VALUES ('TXN112233', '112233445', 800, 'COMPLETED', TO_DATE('2025-02-01 19:02:00', 'YYYY-MM-DD HH24:MI:SS'));
+2025-02-01T19:02:00.160Z [ERROR] [OracleDB] [TRACE990876] Oracle DB error: Unique constraint violation on TRANSACTION_HISTORY table. Duplicate transaction ID.
+2025-02-01T19:02:00.165Z [INFO ] [SpringBoot] [TRACE990876] Oracle DB transaction failed. Attempting retry...
+2025-02-01T19:02:00.170Z [DEBUG] [OracleDB] [TRACE990876] Retrying Oracle DB insert query.
+2025-02-01T19:02:00.175Z [DEBUG] [OracleDB] [TRACE990876] Executing retry query:
+INSERT INTO TRANSACTION_HISTORY (TRANSACTION_ID, ACCOUNT_NUMBER, AMOUNT, STATUS, TIMESTAMP)
+VALUES ('TXN112234', '112233445', 800, 'COMPLETED', TO_DATE('2025-02-01 19:02:00', 'YYYY-MM-DD HH24:MI:SS'));
+2025-02-01T19:02:00.180Z [INFO ] [OracleDB] [TRACE990876] Transaction record inserted successfully. Transaction ID: TXN112234.
+2025-02-01T19:02:00.185Z [INFO ] [SpringBoot] [TRACE990876] Withdrawal transaction completed successfully. Transaction ID: TXN112234.
+2025-02-01T19:02:00.190Z [DEBUG] [UI] [TRACE990876] Transaction completion notification sent to user.
+2025-02-01T19:02:00.195Z [INFO ] [UI] [TRACE990876] User confirmed withdrawal completion.
+2025-02-01T19:03:00.100Z [INFO ] [UI] [TRACE112233] User initiated withdrawal request. Amount: $150, Account: 556677889.
+2025-02-01T19:03:00.105Z [DEBUG] [UI] [TRACE112233] Sending withdrawal request to Spring Boot server.
+2025-02-01T19:03:00.110Z [INFO ] [SpringBoot] [TRACE112233] Received withdrawal request. Amount: $150, Account: 556677889.
+2025-02-01T19:03:00.115Z [DEBUG] [SpringBoot] [TRACE112233] Preparing SOAP request for Middleware CustInfo.
+2025-02-01T19:03:00.120Z [DEBUG] [SpringBoot] [TRACE112233] SOAP Request:
+<?xml version="1.0"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:mid="http://middleware.example.com/CustInfo">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <mid:GetCustomerInfoRequest>
+         <mid:AccountNumber>556677889</mid:AccountNumber>
+      </mid:GetCustomerInfoRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
+2025-02-01T19:03:00.125Z [INFO ] [Middleware] [TRACE112233] Received SOAP request. Processing...
+2025-02-01T19:03:00.130Z [DEBUG] [Middleware] [TRACE112233] Validating account information for Account: 556677889.
+2025-02-01T19:03:00.135Z [INFO ] [Middleware] [TRACE112233] Account validated successfully. Preparing response.
+2025-02-01T19:03:00.140Z [DEBUG] [Middleware] [TRACE112233] SOAP Response:
+<?xml version="1.0"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+   <soapenv:Body>
+      <GetCustomerInfoResponse>
+         <Status>Success</Status>
+         <Message>Account validated successfully.</Message>
+      </GetCustomerInfoResponse>
+   </soapenv:Body>
+</soapenv:Envelope>
+2025-02-01T19:03:00.145Z [INFO ] [SpringBoot] [TRACE112233] Received successful response from Middleware. Proceeding with transaction.
+2025-02-01T19:03:00.150Z [DEBUG] [SpringBoot] [TRACE112233] Initiating Oracle DB insert query for transaction record.
+2025-02-01T19:03:00.155Z [DEBUG] [OracleDB] [TRACE112233] Executing query:
+INSERT INTO TRANSACTION_HISTORY (TRANSACTION_ID, ACCOUNT_NUMBER, AMOUNT, STATUS, TIMESTAMP)
+VALUES ('TXN556677', '556677889', 150, 'COMPLETED', TO_DATE('2025-02-01 19:03:00', 'YYYY-MM-DD HH24:MI:SS'));
+2025-02-01T19:03:00.160Z [INFO ] [OracleDB] [TRACE112233] Transaction record inserted successfully. Transaction ID: TXN556677.
+2025-02-01T19:03:00.165Z [INFO ] [SpringBoot] [TRACE112233] Withdrawal transaction completed successfully. Transaction ID: TXN556677.
+2025-02-01T19:03:00.170Z [DEBUG] [UI] [TRACE112233] Transaction completion notification sent to user.
+2025-02-01T19:03:00.175Z [INFO ] [UI] [TRACE112233] User confirmed withdrawal completion.
+2025-02-01T19:04:00.100Z [INFO ] [UI] [TRACE334455] User initiated withdrawal request. Amount: $200, Account: 123456789.
+2025-02-01T19:04:00.105Z [DEBUG] [UI] [TRACE334455] Sending withdrawal request to Spring Boot server.
+2025-02-01T19:04:00.110Z [INFO ] [SpringBoot] [TRACE334455] Received withdrawal request. Amount: $200, Account: 123456789.
+2025-02-01T19:04:00.115Z [DEBUG] [SpringBoot] [TRACE334455] Preparing SOAP request for Middleware CustInfo.
+2025-02-01T19:04:00.120Z [DEBUG] [SpringBoot] [TRACE334455] SOAP Request:
+<?xml version="1.0"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:mid="http://middleware.example.com/CustInfo">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <mid:GetCustomerInfoRequest>
+         <mid:AccountNumber>123456789</mid:AccountNumber>
+      </mid:GetCustomerInfoRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
+2025-02-01T19:04:00.125Z [INFO ] [Middleware] [TRACE334455] Received SOAP request. Processing...
+2025-02-01T19:04:00.130Z [DEBUG] [Middleware] [TRACE334455] Validating account information for Account: 123456789.
+2025-02-01T19:04:00.135Z [INFO ] [Middleware] [TRACE334455] Account validated successfully. Preparing response.
+2025-02-01T19:04:00.140Z [DEBUG] [Middleware] [TRACE334455] SOAP Response:
+<?xml version="1.0"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+   <soapenv:Body>
+      <GetCustomerInfoResponse>
+         <Status>Success</Status>
+         <Message>Account validated successfully.</Message>
+      </GetCustomerInfoResponse>
+   </soapenv:Body>
+</soapenv:Envelope>
+2025-02-01T19:04:00.145Z [INFO ] [SpringBoot] [TRACE334455] Received successful response from Middleware. Proceeding with transaction.
+2025-02-01T19:04:00.150Z [DEBUG] [SpringBoot] [TRACE334455] Initiating Oracle DB insert query for transaction record.
+2025-02-01T19:04:00.155Z [DEBUG] [OracleDB] [TRACE334455] Executing query:
+INSERT INTO TRANSACTION_HISTORY (TRANSACTION_ID, ACCOUNT_NUMBER, AMOUNT, STATUS, TIMESTAMP)
+VALUES ('TXN334455', '123456789', 200, 'COMPLETED', TO_DATE('2025-02-01 19:04:00', 'YYYY-MM-DD HH24:MI:SS'));
+2025-02-01T19:04:00.160Z [INFO ] [OracleDB] [TRACE334455] Transaction record inserted successfully. Transaction ID: TXN334455.
+2025-02-01T19:04:00.165Z [INFO ] [SpringBoot] [TRACE334455] Withdrawal transaction completed successfully. Transaction ID: TXN334455.
+2025-02-01T19:04:00.170Z [DEBUG] [UI] [TRACE334455] Transaction completion notification sent to user.
+2025-02-01T19:04:00.175Z [INFO ] [UI] [TRACE334455] User confirmed withdrawal completion.
+2025-02-01T19:05:00.100Z [INFO ] [UI] [TRACE556677] User initiated withdrawal request. Amount: $300, Account: 987654321.
+2025-02-01T19:05:00.105Z [DEBUG] [UI] [TRACE556677] Sending withdrawal request to Spring Boot server.
+2025-02-01T19:05:00.110Z [INFO ] [SpringBoot] [TRACE556677] Received withdrawal request. Amount: $300, Account: 987654321.
+2025-02-01T19:05:00.115Z [DEBUG] [SpringBoot] [TRACE556677] Preparing SOAP request for Middleware CustInfo.
+2025-02-01T19:05:00.120Z [DEBUG] [SpringBoot] [TRACE556677] SOAP Request:
+<?xml version="1.0"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:mid="http://middleware.example.com/CustInfo">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <mid:GetCustomerInfoRequest>
+         <mid:AccountNumber>987654321</mid:AccountNumber>
+      </mid:GetCustomerInfoRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
+2025-02-01T19:05:00.125Z [INFO ] [Middleware] [TRACE556677] Received SOAP request. Processing...
+2025-02-01T19:05:00.130Z [DEBUG] [Middleware] [TRACE556677] Validating account information for Account: 987654321.
+2025-02-01T19:05:00.135Z [INFO ] [Middleware] [TRACE556677] Account validated successfully. Preparing response.
+2025-02-01T19:05:00.140Z [DEBUG] [Middleware] [TRACE556677] SOAP Response:
+<?xml version="1.0"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+   <soapenv:Body>
+      <GetCustomerInfoResponse>
+         <Status>Success</Status>
+         <Message>Account validated successfully.</Message>
+      </GetCustomerInfoResponse>
+   </soapenv:Body>
+</soapenv:Envelope>
+2025-02-01T19:05:00.145Z [INFO ] [SpringBoot] [TRACE556677] Received successful response from Middleware. Proceeding with transaction.
+2025-02-01T19:05:00.150Z [DEBUG] [SpringBoot] [TRACE556677] Initiating Oracle DB insert query for transaction record.
+2025-02-01T19:05:00.155Z [DEBUG] [OracleDB] [TRACE556677] Executing query:
+INSERT INTO TRANSACTION_HISTORY (TRANSACTION_ID, ACCOUNT_NUMBER, AMOUNT, STATUS, TIMESTAMP)
+VALUES ('TXN556677', '987654321', 300, 'COMPLETED', TO_DATE('2025-02-01 19:05:00', 'YYYY-MM-DD HH24:MI:SS'));
+2025-02-01T19:05:00.160Z [ERROR] [SpringBoot] [TRACE556677] Spring Boot error: Exception occurred during processing. Database connection timeout.
+2025-02-01T19:05:00.165Z [INFO ] [SpringBoot] [TRACE556677] Database connection failed. Rolling back transaction.
+2025-02-01T19:05:00.170Z [DEBUG] [SpringBoot] [TRACE556677] Rolling back transaction for TXN556677.
+2025-02-01T19:05:00.175Z [ERROR] [OracleDB] [TRACE556677] OracleDB rollback failed. Transaction could not be rolled back due to connection loss.
+2025-02-01T19:05:00.180Z [INFO ] [SpringBoot] [TRACE556677] Transaction rollback completed after retry.
+2025-02-01T19:05:00.185Z [DEBUG] [UI] [TRACE556677] Displaying error message to user: "Transaction failed due to database connection issues."
+2025-02-01T19:05:00.190Z [INFO ] [UI] [TRACE556677] User acknowledged error message.
+2025-02-01T19:06:00.100Z [INFO ] [SpringBoot] [TRACE999888] Application shutdown initiated. Closing active sessions and connections.
+2025-02-01T19:06:00.105Z [DEBUG] [SpringBoot] [TRACE999888] Closing database connections.
+2025-02-01T19:06:00.110Z [DEBUG] [SpringBoot] [TRACE999888] Closing REST API connections.
+2025-02-01T19:06:00.115Z [INFO ] [SpringBoot] [TRACE999888] All connections closed. Application shutdown completed successfully.
+0.105Z [DEBUG] [SpringBoot] [TRACE999888] Closing database connections.
+2025-02-01T19:06:00.110Z [DEBUG] [SpringBoot] [TRACE999888] Closing REST API connections.
+2025-02-01T19:06:00.115Z [INFO ] [SpringBoot] [TRACE999888] All connections closed. Application shutdown completed successfully.
+
